@@ -2,15 +2,15 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Surface } from 'react-native-paper';
 
-export default function ProfileScreen() {
+export default function Index() {
   return (
     <View style={styles.container}>
       <Surface style={styles.surface} elevation={2}>
         <Text variant="headlineMedium" style={styles.title}>
-          Profil
+          Rezepte
         </Text>
         <Text variant="bodyLarge" style={styles.subtitle}>
-          Ihre Profileinstellungen werden hier angezeigt
+          Ihre Lieblings-Rezepte werden hier angezeigt
         </Text>
       </Surface>
     </View>

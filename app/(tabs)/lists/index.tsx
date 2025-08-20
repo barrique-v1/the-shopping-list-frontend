@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Surface } from 'react-native-paper';
 
-export default function ListsScreen() {
+export default function Index() {
   return (
     <View style={styles.container}>
       <Surface style={styles.surface} elevation={2}>

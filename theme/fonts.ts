@@ -1,0 +1,116 @@
+import { MD3Theme } from 'react-native-paper';
+
+type MD3Typescale = MD3Theme['fonts'];
+
+export const fonts: MD3Typescale = {
+  default: {
+    fontFamily: 'Roboto-Regular',
+    fontWeight: '400',
+    letterSpacing: 0,
+  },
+  displayLarge: {
+    fontFamily: 'Antonio-Bold',
+    fontSize: 57,
+    fontWeight: '700',
+    lineHeight: 64,
+    letterSpacing: 0,
+  },
+  displayMedium: {
+    fontFamily: 'Antonio-Bold',
+    fontSize: 45,
+    fontWeight: '700',
+    lineHeight: 52,
+    letterSpacing: 0,
+  },
+  displaySmall: {
+    fontFamily: 'Antonio-Bold',
+    fontSize: 36,
+    fontWeight: '700',
+    lineHeight: 44,
+    letterSpacing: 0,
+  },
+  headlineLarge: {
+    fontFamily: 'Antonio-SemiBold',
+    fontSize: 32,
+    fontWeight: '600',
+    lineHeight: 40,
+    letterSpacing: 0,
+  },
+  headlineMedium: {
+    fontFamily: 'Antonio-SemiBold',
+    fontSize: 28,
+    fontWeight: '600',
+    lineHeight: 36,
+    letterSpacing: 0,
+  },
+  headlineSmall: {
+    fontFamily: 'Antonio-SemiBold',
+    fontSize: 24,
+    fontWeight: '600',
+    lineHeight: 32,
+    letterSpacing: 0,
+  },
+  titleLarge: {
+    fontFamily: 'Antonio-Medium',
+    fontSize: 22,
+    fontWeight: '500',
+    lineHeight: 28,
+    letterSpacing: 0,
+  },
+  titleMedium: {
+    fontFamily: 'Antonio-Medium',
+    fontSize: 16,
+    fontWeight: '500',
+    lineHeight: 24,
+    letterSpacing: 0.15,
+  },
+  titleSmall: {
+    fontFamily: 'Antonio-Medium',
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    letterSpacing: 0.1,
+  },
+  bodyLarge: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 24,
+    letterSpacing: 0.15,
+  },
+  bodyMedium: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 20,
+    letterSpacing: 0.25,
+  },
+  bodySmall: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 12,
+    fontWeight: '400',
+    lineHeight: 16,
+    letterSpacing: 0.4,
+  },
+  labelLarge: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 20,
+    letterSpacing: 0.1,
+  },
+  labelMedium: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 12,
+    fontWeight: '500',
+    lineHeight: 16,
+    letterSpacing: 0.5,
+  },
+  labelSmall: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 11,
+    fontWeight: '500',
+    lineHeight: 16,
+    letterSpacing: 0.5,
+  },
+};
