@@ -1,15 +1,23 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Surface, useTheme} from 'react-native-paper';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default function Index() {
     const theme = useTheme();
+    const insets = useSafeAreaInsets();
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            padding: 16,
             backgroundColor: theme.colors.background,
+            paddingTop: 0, // Remove top padding since we have custom header
+            paddingHorizontal: 16,
+            paddingBottom: insets.bottom,
+        },
+        content: {
+            flex: 1,
+            paddingTop: 16,
         },
         surface: {
             padding: 24,
@@ -17,7 +25,6 @@ export default function Index() {
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: 200,
-            backgroundColor: theme.colors.surface,
         },
         title: {
             marginBottom: 8,
@@ -31,14 +38,16 @@ export default function Index() {
 
     return (
         <View style={styles.container}>
-            <Surface style={styles.surface} elevation={2}>
-                <Text variant="headlineMedium" style={styles.title}>
-                    Rezepte
-                </Text>
-                <Text variant="bodyLarge" style={styles.subtitle}>
-                    Ihre Lieblings-Rezepte werden hier angezeigt
-                </Text>
-            </Surface>
+            <View style={styles.content}>
+                <Surface style={styles.surface} elevation={2}>
+                    <Text variant="headlineMedium" style={styles.title}>
+                        Rezepte
+                    </Text>
+                    <Text variant="bodyLarge" style={styles.subtitle}>
+                        Ihre Lieblings-Rezepte werden hier angezeigt
+                    </Text>
+                </Surface>
+            </View>
         </View>
     );
 }
