@@ -1,5 +1,10 @@
-import { Stack } from "expo-router";
+import { PaperProvider } from 'react-native-paper';
+import TabLayout from './(tabs)/_layout';
 
 export default function RootLayout() {
-  return <Stack />;
+  return (
+    <PaperProvider>
+      <TabLayout />
+    </PaperProvider>
+  );
 }
