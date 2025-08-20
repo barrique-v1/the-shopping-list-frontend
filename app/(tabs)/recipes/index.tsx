@@ -1,41 +1,44 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, Surface } from 'react-native-paper';
+import {View, StyleSheet} from 'react-native';
+import {Text, Surface, useTheme} from 'react-native-paper';
 
 export default function Index() {
-  return (
-    <View style={styles.container}>
-      <Surface style={styles.surface} elevation={2}>
-        <Text variant="headlineMedium" style={styles.title}>
-          Rezepte
-        </Text>
-        <Text variant="bodyLarge" style={styles.subtitle}>
-          Ihre Lieblings-Rezepte werden hier angezeigt
-        </Text>
-      </Surface>
-    </View>
-  );
-}
+    const theme = useTheme();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#FFFBFE',
-  },
-  surface: {
-    padding: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 200,
-  },
-  title: {
-    marginBottom: 8,
-    color: '#1C1B1F',
-  },
-  subtitle: {
-    textAlign: 'center',
-    color: '#49454F',
-  },
-});
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            padding: 16,
+            backgroundColor: theme.colors.background,
+        },
+        surface: {
+            padding: 24,
+            borderRadius: theme.roundness,
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: 200,
+            backgroundColor: theme.colors.surface,
+        },
+        title: {
+            marginBottom: 8,
+            color: theme.colors.onSurface,
+        },
+        subtitle: {
+            textAlign: 'center',
+            color: theme.colors.onSurfaceVariant,
+        },
+    });
+
+    return (
+        <View style={styles.container}>
+            <Surface style={styles.surface} elevation={2}>
+                <Text variant="headlineMedium" style={styles.title}>
+                    Rezepte
+                </Text>
+                <Text variant="bodyLarge" style={styles.subtitle}>
+                    Ihre Lieblings-Rezepte werden hier angezeigt
+                </Text>
+            </Surface>
+        </View>
+    );
+}
