@@ -1,7 +1,7 @@
 import {CommonActions} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Appbar, BottomNavigation, useTheme} from 'react-native-paper';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {MaterialDesignIcons} from  '@react-native-vector-icons/material-design-icons'
 import {View} from 'react-native';
 import ListsIndex from '@/app/(tabs)/lists';
 import RecipesIndex from '@/app/(tabs)/recipes';
@@ -79,7 +79,7 @@ export default function TabLayout() {
                     component={ListsIndex}
                     options={{
                         tabBarIcon: ({color}) => (
-                            <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26}/>
+                            <MaterialDesignIcons name="playlist-check" color={color} size={24}/>
                         ),
                     }}
                 />
@@ -88,7 +88,7 @@ export default function TabLayout() {
                     component={RecipesIndex}
                     options={{
                         tabBarIcon: ({color}) => (
-                            <MaterialCommunityIcons name="book-open-variant" color={color} size={26}/>
+                            <MaterialDesignIcons name="book-open-variant" color={color} size={24}/>
                         ),
                     }}
                 />
@@ -97,7 +97,7 @@ export default function TabLayout() {
                     component={Profile}
                     options={{
                         tabBarIcon: ({color}) => (
-                            <MaterialCommunityIcons name="account" color={color} size={26}/>
+                            <MaterialDesignIcons name="account" color={color} size={24}/>
                         ),
                     }}
                 />
