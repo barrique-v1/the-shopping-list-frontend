@@ -1,42 +1,55 @@
-import {MD3LightTheme, MD3DarkTheme} from 'react-native-paper';
-import {lightColors, darkColors} from './colors';
-import {fonts} from './fonts';
+import { MD3LightTheme, MD3DarkTheme, MD3Theme } from 'react-native-paper';
+import { lightColors, darkColors } from './colors';
+import { fonts } from './fonts';
+import { spacing, roundness, shadows } from './tokens';
 
-export const spacing = {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 24,
-    xl: 32,
-    xxl: 48,
-};
-
-export const roundness = {
-    none: 0,
-    sm: 4,
-    md: 8,
-    lg: 12,
-    xl: 16,
-    xxl: 24,
-    circle: 9999,
+// Extended theme interface
+export interface AppTheme extends MD3Theme {
+    spacing: typeof spacing;
+    customRoundness: typeof roundness;
+    shadows: typeof shadows;
+    custom: {
+        statusBarHeight: number;
+        headerHeight: number;
+        tabBarHeight: number;
+    };
 }
 
-export const lightTheme = {
+// Light theme
+export const lightTheme: AppTheme = {
     ...MD3LightTheme,
     colors: lightColors,
     fonts,
-    roundness,
     spacing,
+    customRoundness: roundness,
+    shadows,
+    custom: {
+        statusBarHeight: 44,
+        headerHeight: 56,
+        tabBarHeight: 80,
+    },
 };
 
-export const darkTheme = {
+// Dark theme
+export const darkTheme: AppTheme = {
     ...MD3DarkTheme,
     colors: darkColors,
     fonts,
-    roundness,
     spacing,
+    customRoundness: roundness,
+    shadows,
+    custom: {
+        statusBarHeight: 44,
+        headerHeight: 56,
+        tabBarHeight: 80,
+    },
 };
 
-export type AppTheme = typeof lightTheme;
+// Type augmentation for react-native-paper
+declare global {
+    namespace ReactNativePaper {
+        interface Theme extends AppTheme {}
+    }
+}
 
-export {lightColors, darkColors, fonts};
+export { lightColors, darkColors, fonts, spacing, roundness, shadows };

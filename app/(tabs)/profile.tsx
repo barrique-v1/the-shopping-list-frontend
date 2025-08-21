@@ -22,7 +22,7 @@ export default function Profile() {
         },
         surface: {
             padding: theme.spacing.lg,
-            borderRadius: theme.roundness.md,
+            borderRadius: theme.roundness,
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: 200,
