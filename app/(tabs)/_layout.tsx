@@ -1,22 +1,23 @@
 import React, {useState} from 'react';
-import {Appbar, BottomNavigation, useTheme} from 'react-native-paper';
+import {BottomNavigation, useTheme} from 'react-native-paper';
 import {View} from 'react-native';
 import ListsIndex from '@/app/(tabs)/lists';
 import RecipesIndex from '@/app/(tabs)/recipes';
 import Profile from '@/app/(tabs)/profile';
+import Header from '@/components/layout/Header';
 
 const routes = [
     {
         key: 'lists',
-        title: 'Listen',
-        focusedIcon: 'playlist-check',
-        unfocusedIcon: 'playlist-check-outline',
+        title: 'Meine Listen',
+        focusedIcon: 'list-box',
+        unfocusedIcon: 'list-box-outline',
     },
     {
         key: 'recipes',
-        title: 'Rezepte',
+        title: 'Meine Rezepte',
         focusedIcon: 'book-open-variant',
-        unfocusedIcon: 'book-open-outline',
+        unfocusedIcon: 'book-open-variant-outline',
     },
     {
         key: 'profile',
@@ -42,27 +43,14 @@ export default function TabLayout() {
 
     return (
         <View style={{flex: 1}}>
-            <Appbar.Header
-                style={{
-                    backgroundColor: theme.colors.surface,
-                }}
-            >
-                <Appbar.Content
-                    title={getCurrentTitle()}
-                    titleStyle={{
-                        fontFamily: 'Antonio-SemiBold',
-                        fontWeight: '600',
-                        color: theme.colors.onSurface,
-                    }}
-                />
-            </Appbar.Header>
+            <Header title={getCurrentTitle()} />
 
             <BottomNavigation
                 navigationState={{ index, routes }}
                 onIndexChange={setIndex}
                 renderScene={renderScene}
                 barStyle={{
-                    backgroundColor: theme.colors.surface,
+                    backgroundColor: theme.colors.surfaceVariant,
                 }}
             />
         </View>

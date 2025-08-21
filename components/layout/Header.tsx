@@ -11,16 +11,12 @@ export default function Header({ title }: HeaderProps) {
     return (
         <Appbar.Header
             style={{
-                backgroundColor: theme.colors.surface,
+                backgroundColor: theme.colors.surfaceVariant,
             }}
         >
             <Appbar.Content
                 title={title}
-                titleStyle={{
-                    fontFamily: 'Antonio-SemiBold',
-                    fontWeight: '600',
-                    color: theme.colors.onSurface,
-                }}
+                titleStyle={theme.fonts.headlineMedium}
             />
         </Appbar.Header>
     );
