@@ -2,32 +2,33 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Surface, useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { AppTheme } from '@/theme';
 
 export default function Profile() {
-    const theme = useTheme();
+    const theme = useTheme<AppTheme>();
     const insets = useSafeAreaInsets();
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
             backgroundColor: theme.colors.background,
-            paddingTop: 0, // Remove top padding since we have custom header
-            paddingHorizontal: 16,
+            paddingTop: 0,
+            paddingHorizontal: theme.spacing.md,
             paddingBottom: insets.bottom,
         },
         content: {
             flex: 1,
-            paddingTop: 16,
+            paddingTop: theme.spacing.md,
         },
         surface: {
-            padding: 24,
-            borderRadius: theme.roundness,
+            padding: theme.spacing.lg,
+            borderRadius: theme.roundness.md,
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: 200,
         },
         title: {
-            marginBottom: 8,
+            marginBottom: theme.spacing.sm,
             color: theme.colors.onSurface,
         },
         subtitle: {
