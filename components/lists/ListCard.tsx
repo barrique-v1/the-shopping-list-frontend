@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, Card, Icon, useTheme, ProgressBar } from 'react-native-paper';
+import { Text, Card, useTheme, ProgressBar } from 'react-native-paper';
 import { AppTheme } from '@/theme';
 
 interface ListCardProps {
@@ -8,7 +8,6 @@ interface ListCardProps {
     title: string;
     itemCount: number;
     completedCount: number;
-    lastModified: string;
     onPress?: () => void;
 }
 
@@ -17,7 +16,6 @@ export default function ListCard({
     title,
     itemCount,
     completedCount,
-    lastModified,
     onPress
 }: ListCardProps) {
     const theme = useTheme<AppTheme>();
@@ -33,30 +31,14 @@ export default function ListCard({
         cardContent: {
             padding: theme.spacing.md,
         },
-        header: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: theme.spacing.sm,
-        },
         titleContainer: {
             flex: 1,
             marginRight: theme.spacing.sm,
         },
-        title: {
-            fontSize: 18,
-            fontWeight: '600',
-            color: theme.colors.onSurface,
-            marginBottom: 4,
-        },
-        subtitle: {
-            fontSize: 14,
-            color: theme.colors.onSurfaceVariant,
-        },
         iconContainer: {
             backgroundColor: theme.colors.primaryContainer,
-            borderRadius: 20,
-            padding: 8,
+            borderRadius: theme.customRoundness.lg,
+            padding: theme.spacing.sm,
         },
         footer: {
             flexDirection: 'column',
@@ -69,15 +51,11 @@ export default function ListCard({
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: 4,
-        },
-        progressText: {
-            fontSize: 12,
-            color: theme.colors.onSurfaceVariant,
+            marginBottom: theme.spacing.xs,
         },
         progressBar: {
-            height: 6,
-            borderRadius: 3,
+            height: 8,
+            borderRadius: theme.customRoundness.sm,
             backgroundColor: theme.colors.surfaceVariant,
         },
         bottomInfo: {
@@ -85,40 +63,24 @@ export default function ListCard({
             justifyContent: 'flex-end',
             alignItems: 'center',
         },
-        lastModified: {
-            fontSize: 12,
-            color: theme.colors.onSurfaceVariant,
-        },
     });
 
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
             <Card style={styles.card} mode="contained">
                 <View style={styles.cardContent}>
-                    <View style={styles.header}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{title}</Text>
-                            <Text style={styles.subtitle}>
+                            <Text style={[theme.fonts.titleLarge, { color: theme.colors.primary }]}>{title}</Text>
+                            <Text style={[theme.fonts.bodyMedium, { color: theme.colors.onSurfaceVariant }]}>
                                 {itemCount} {itemCount === 1 ? 'Artikel' : 'Artikel'}
                             </Text>
                         </View>
-                        <View style={styles.iconContainer}>
-                            <Icon
-                                source={isCompleted ? "check-circle" : "format-list-bulleted"}
-                                size={24}
-                                color={theme.colors.primary}
-                            />
-                        </View>
-                    </View>
 
                     <View style={styles.footer}>
                         <View style={styles.progressContainer}>
                             <View style={styles.progressHeader}>
-                                <Text style={styles.progressText}>
+                                <Text style={[theme.fonts.bodySmall, { color: theme.colors.onSurfaceVariant }]}>
                                     {completedCount} von {itemCount} erledigt
-                                </Text>
-                                <Text style={styles.progressText}>
-                                    {Math.round(progress * 100)}%
                                 </Text>
                             </View>
                             <ProgressBar
@@ -126,11 +88,6 @@ export default function ListCard({
                                 style={styles.progressBar}
                                 color={isCompleted ? theme.colors.primary : theme.colors.secondary}
                             />
-                        </View>
-                        <View style={styles.bottomInfo}>
-                            <Text style={styles.lastModified}>
-                                {lastModified}
-                            </Text>
                         </View>
                     </View>
                 </View>

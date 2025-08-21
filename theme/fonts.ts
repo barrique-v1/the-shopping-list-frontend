@@ -21,63 +21,63 @@ export const fonts: MD3Fonts = {
     displayLarge: {
         fontFamily: getFontFamily('Antonio-Bold', 'System'),
         fontSize: 57,
-        fontWeight: '700',
+        fontWeight: '400', // Changed from '700' to '400' since we're using the Bold font variant
         lineHeight: 64,
         letterSpacing: 0,
     },
     displayMedium: {
         fontFamily: getFontFamily('Antonio-Bold', 'System'),
         fontSize: 45,
-        fontWeight: '700',
+        fontWeight: '400', // Changed from '700' to '400' since we're using the Bold font variant
         lineHeight: 52,
         letterSpacing: 0,
     },
     displaySmall: {
         fontFamily: getFontFamily('Antonio-Bold', 'System'),
         fontSize: 36,
-        fontWeight: '700',
+        fontWeight: '400', // Changed from '700' to '400' since we're using the Bold font variant
         lineHeight: 44,
         letterSpacing: 0,
     },
     headlineLarge: {
         fontFamily: getFontFamily('Antonio-SemiBold', 'System'),
         fontSize: 32,
-        fontWeight: '600',
+        fontWeight: '400', // Changed from '600' to '400' since we're using the SemiBold font variant
         lineHeight: 40,
         letterSpacing: 0,
     },
     headlineMedium: {
         fontFamily: getFontFamily('Antonio-SemiBold', 'System'),
         fontSize: 28,
-        fontWeight: '600',
+        fontWeight: '400', // Changed from 'bold' to '400' since we're using the SemiBold font variant
         lineHeight: 36,
         letterSpacing: 0,
     },
     headlineSmall: {
         fontFamily: getFontFamily('Antonio-SemiBold', 'System'),
         fontSize: 24,
-        fontWeight: '600',
+        fontWeight: '400', // Changed from '600' to '400' since we're using the SemiBold font variant
         lineHeight: 32,
         letterSpacing: 0,
     },
     titleLarge: {
         fontFamily: getFontFamily('Antonio-Medium', 'System'),
         fontSize: 22,
-        fontWeight: '500',
+        fontWeight: '400',
         lineHeight: 28,
         letterSpacing: 0,
     },
     titleMedium: {
         fontFamily: getFontFamily('Antonio-Medium', 'System'),
         fontSize: 16,
-        fontWeight: '500',
+        fontWeight: '400', // Changed from '500' to '400' since we're using the Medium font variant
         lineHeight: 24,
         letterSpacing: 0.15,
     },
     titleSmall: {
         fontFamily: getFontFamily('Antonio-Medium', 'System'),
         fontSize: 14,
-        fontWeight: '500',
+        fontWeight: '400', // Changed from '500' to '400' since we're using the Medium font variant
         lineHeight: 20,
         letterSpacing: 0.1,
     },
@@ -103,23 +103,23 @@ export const fonts: MD3Fonts = {
         letterSpacing: 0.4,
     },
     labelLarge: {
-        fontFamily: getFontFamily('Roboto-Medium', 'System'),
+        fontFamily: getFontFamily('Roboto-Regular', 'System'),
         fontSize: 14,
-        fontWeight: '500',
+        fontWeight: '400', // Changed from '500' to '400' and using Roboto-Regular instead of Roboto-Medium
         lineHeight: 20,
         letterSpacing: 0.1,
     },
     labelMedium: {
-        fontFamily: getFontFamily('Roboto-Medium', 'System'),
+        fontFamily: getFontFamily('Roboto-Regular', 'System'),
         fontSize: 12,
-        fontWeight: '500',
+        fontWeight: '400', // Changed from '500' to '400' and using Roboto-Regular instead of Roboto-Medium
         lineHeight: 16,
         letterSpacing: 0.5,
     },
     labelSmall: {
-        fontFamily: getFontFamily('Roboto-Medium', 'System'),
+        fontFamily: getFontFamily('Roboto-Regular', 'System'),
         fontSize: 11,
-        fontWeight: '500',
+        fontWeight: '400', // Changed from '500' to '400' and using Roboto-Regular instead of Roboto-Medium
         lineHeight: 16,
         letterSpacing: 0.5,
     },

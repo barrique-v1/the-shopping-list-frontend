@@ -15,28 +15,24 @@ export default function Index() {
             title: 'Wocheneinkauf',
             itemCount: 12,
             completedCount: 8,
-            lastModified: 'vor 2 Stunden',
         },
         {
             id: '2',
-            title: 'Geburtstag Sarah',
+            title: 'Geburtstag',
             itemCount: 5,
             completedCount: 5,
-            lastModified: 'gestern',
         },
         {
             id: '3',
             title: 'Baumarkt',
             itemCount: 7,
             completedCount: 2,
-            lastModified: 'vor 3 Tagen',
         },
         {
             id: '4',
             title: 'Apotheke',
             itemCount: 3,
             completedCount: 0,
-            lastModified: 'vor 1 Woche',
         },
     ];
 
@@ -75,7 +71,6 @@ export default function Index() {
                             title={list.title}
                             itemCount={list.itemCount}
                             completedCount={list.completedCount}
-                            lastModified={list.lastModified}
                             onPress={() => handleListPress(list.id)}
                         />
                     ))}

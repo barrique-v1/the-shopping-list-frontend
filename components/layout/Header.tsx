@@ -11,7 +11,7 @@ export default function Header({ title }: HeaderProps) {
     return (
         <Appbar.Header
             style={{
-                backgroundColor: theme.colors.surfaceVariant,
+                backgroundColor: theme.colors.surface,
             }}
         >
             <Appbar.Content

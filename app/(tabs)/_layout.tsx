@@ -50,7 +50,7 @@ export default function TabLayout() {
                 onIndexChange={setIndex}
                 renderScene={renderScene}
                 barStyle={{
-                    backgroundColor: theme.colors.surfaceVariant,
+                    backgroundColor: theme.colors.surface,
                 }}
             />
         </View>
