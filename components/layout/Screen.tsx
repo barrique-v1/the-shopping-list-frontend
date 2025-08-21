@@ -15,10 +15,10 @@ export default function Screen({children}: ScreenProps) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: theme.colors.background,
             paddingTop: 0,
             paddingHorizontal:theme.spacing.md,
             paddingBottom: insets.bottom,
+            backgroundColor: theme.colors.surface,
         },
         content: {
             flex: 1,

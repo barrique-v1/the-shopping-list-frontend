@@ -18,6 +18,7 @@ export default function FAB({ icon, label, onPress, style }: FABProps) {
             position: 'absolute',
             right: theme.spacing.md,
             bottom: theme.spacing.md,
+            backgroundColor: theme.colors.tertiaryContainer,
         },
     });
 

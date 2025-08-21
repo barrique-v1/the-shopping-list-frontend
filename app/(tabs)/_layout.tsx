@@ -41,9 +41,37 @@ export default function TabLayout() {
         return routes[index]?.title || 'App';
     };
 
+    const getHeaderButton = () => {
+        switch (routes[index]?.key) {
+            case 'lists':
+                return {
+                    label: 'Neue Liste',
+                    icon: 'plus',
+                    onPress: () => {
+                        console.log('Neue Liste erstellen');
+                        // TODO: Navigate to create list screen
+                    }
+                };
+            case 'recipes':
+                return {
+                    label: 'Neues Rezept',
+                    icon: 'book-plus',
+                    onPress: () => {
+                        console.log('Neues Rezept hinzufügen');
+                        // TODO: Navigate to add recipe screen
+                    }
+                };
+            default:
+                return undefined;
+        }
+    };
+
     return (
         <View style={{flex: 1}}>
-            <Header title={getCurrentTitle()} />
+            <Header
+                title={getCurrentTitle()}
+                rightButton={getHeaderButton()}
+            />
 
             <BottomNavigation
                 navigationState={{ index, routes }}
