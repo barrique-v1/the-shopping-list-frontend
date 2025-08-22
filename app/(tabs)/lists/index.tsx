@@ -1,7 +1,7 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import type {AppTheme} from '@/theme';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import type { AppTheme } from '@/theme';
 import ListCard from '@/components/lists/ListCard';
 
 export default function Index() {
@@ -80,7 +80,10 @@ export default function Index() {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+            <ScrollView
+                style={styles.content}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={styles.listContainer}>
                     {placeholderLists.map((list) => (
                         <ListCard

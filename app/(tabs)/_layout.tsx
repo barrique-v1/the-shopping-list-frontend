@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {BottomNavigation, useTheme} from 'react-native-paper';
-import {View} from 'react-native';
+import React, { useState } from 'react';
+import { BottomNavigation, useTheme } from 'react-native-paper';
+import { View } from 'react-native';
 import ListsIndex from '@/app/(tabs)/lists';
 import RecipesIndex from '@/app/(tabs)/recipes';
 import Profile from '@/app/(tabs)/profile';
@@ -56,18 +56,16 @@ export default function TabLayout() {
                     label: 'Neue Liste',
                     icon: 'plus',
                     onPress: () => {
-                        console.log('Neue Liste erstellen');
                         handleCreateList();
-                    }
+                    },
                 };
             case 'recipes':
                 return {
                     label: 'Neues Rezept',
                     icon: 'book-plus',
                     onPress: () => {
-                        console.log('Neues Rezept hinzufügen');
                         handleCreateRecipe();
-                    }
+                    },
                 };
             default:
                 return undefined;
@@ -75,14 +73,11 @@ export default function TabLayout() {
     };
 
     return (
-        <View style={{flex: 1}}>
-            <Header
-                title={getCurrentTitle()}
-                rightButton={getHeaderButton()}
-            />
+        <View style={{ flex: 1 }}>
+            <Header title={getCurrentTitle()} rightButton={getHeaderButton()} />
 
             <BottomNavigation
-                navigationState={{index, routes}}
+                navigationState={{ index, routes }}
                 onIndexChange={setIndex}
                 renderScene={renderScene}
                 barStyle={{

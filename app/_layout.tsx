@@ -11,45 +11,45 @@ import TabLayout from './(tabs)/_layout';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
+    const colorScheme = useColorScheme();
+    const [isDarkMode, setIsDarkMode] = useState(colorScheme === 'dark');
 
-  const [loaded] = useFonts({
-    'Antonio-Bold': require('@/assets/fonts/antonio/Antonio-Bold.ttf'),
-    'Antonio-SemiBold': require('@/assets/fonts/antonio/Antonio-SemiBold.ttf'),
-    'Antonio-Medium': require('@/assets/fonts/antonio/Antonio-Medium.ttf'),
-    'Antonio-Regular': require('@/assets/fonts/antonio/Antonio-Regular.ttf'),
-    'Antonio-Light': require('@/assets/fonts/antonio/Antonio-Light.ttf'),
-    'Antonio-ExtraLight': require('@/assets/fonts/antonio/Antonio-ExtraLight.ttf'),
-    'Antonio-Thin': require('@/assets/fonts/antonio/Antonio-Thin.ttf'),
-    'Roboto-Regular': require('@/assets/fonts/roboto/Roboto-Regular.ttf'),
-  });
+    const [loaded] = useFonts({
+        'Antonio-Bold': require('@/assets/fonts/antonio/Antonio-Bold.ttf'),
+        'Antonio-SemiBold': require('@/assets/fonts/antonio/Antonio-SemiBold.ttf'),
+        'Antonio-Medium': require('@/assets/fonts/antonio/Antonio-Medium.ttf'),
+        'Antonio-Regular': require('@/assets/fonts/antonio/Antonio-Regular.ttf'),
+        'Antonio-Light': require('@/assets/fonts/antonio/Antonio-Light.ttf'),
+        'Antonio-ExtraLight': require('@/assets/fonts/antonio/Antonio-ExtraLight.ttf'),
+        'Antonio-Thin': require('@/assets/fonts/antonio/Antonio-Thin.ttf'),
+        'Roboto-Regular': require('@/assets/fonts/roboto/Roboto-Regular.ttf'),
+    });
 
-  useEffect(() => {
-    setIsDarkMode(colorScheme === 'dark');
-  }, [colorScheme]);
+    useEffect(() => {
+        setIsDarkMode(colorScheme === 'dark');
+    }, [colorScheme]);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+
+    if (!loaded) {
+        return null;
     }
-  }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+    const theme = isDarkMode ? darkTheme : lightTheme;
 
-  const theme = isDarkMode ? darkTheme : lightTheme;
-
-  return (
-    <SafeAreaProvider>
-      <PaperProvider theme={theme}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={theme.colors.surface}
-        />
-        <TabLayout />
-      </PaperProvider>
-    </SafeAreaProvider>
-  );
+    return (
+        <SafeAreaProvider>
+            <PaperProvider theme={theme}>
+                <StatusBar
+                    barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                    backgroundColor={theme.colors.surface}
+                />
+                <TabLayout />
+            </PaperProvider>
+        </SafeAreaProvider>
+    );
 }
