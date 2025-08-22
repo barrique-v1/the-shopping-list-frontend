@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {AppTheme} from '@/theme';
+import type {AppTheme} from '@/theme';
 
 interface ScreenProps {
     children: React.ReactNode;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Appbar, useTheme, Button} from 'react-native-paper';
 import {StyleSheet} from "react-native";
-import {AppTheme} from "@/theme";
+import type {AppTheme} from "@/theme";
 
 interface HeaderProps {
     title: string;
@@ -9,7 +9,7 @@ interface HeaderProps {
         label: string;
         icon: string;
         onPress: () => void;
-    };
+    } | undefined;
 }
 
 export default function Header({title, rightButton}: HeaderProps) {

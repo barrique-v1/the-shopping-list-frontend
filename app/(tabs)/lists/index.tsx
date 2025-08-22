@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {AppTheme} from '@/theme';
+import type {AppTheme} from '@/theme';
 import ListCard from '@/components/lists/ListCard';
 
 export default function Index() {
@@ -62,11 +62,6 @@ export default function Index() {
     const handleListPress = (listId: string) => {
         console.log('Liste angeklickt:', listId);
         // Hier würde später die Navigation zur Detailansicht erfolgen
-    };
-
-    const handleCreateList = () => {
-        console.log('Neue Liste erstellen');
-        // Hier würde später die Navigation zum Erstellen einer neuen Liste erfolgen
     };
 
     const styles = StyleSheet.create({

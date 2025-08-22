@@ -41,6 +41,14 @@ export default function TabLayout() {
         return routes[index]?.title || 'App';
     };
 
+    const handleCreateList = () => {
+        console.log('Neue Liste erstellen');
+    };
+
+    const handleCreateRecipe = () => {
+        console.log('Neue Rezept erstellen');
+    };
+
     const getHeaderButton = () => {
         switch (routes[index]?.key) {
             case 'lists':
@@ -49,7 +57,7 @@ export default function TabLayout() {
                     icon: 'plus',
                     onPress: () => {
                         console.log('Neue Liste erstellen');
-                        // TODO: Navigate to create list screen
+                        handleCreateList();
                     }
                 };
             case 'recipes':
@@ -58,7 +66,7 @@ export default function TabLayout() {
                     icon: 'book-plus',
                     onPress: () => {
                         console.log('Neues Rezept hinzufügen');
-                        // TODO: Navigate to add recipe screen
+                        handleCreateRecipe();
                     }
                 };
             default:
@@ -74,7 +82,7 @@ export default function TabLayout() {
             />
 
             <BottomNavigation
-                navigationState={{ index, routes }}
+                navigationState={{index, routes}}
                 onIndexChange={setIndex}
                 renderScene={renderScene}
                 barStyle={{

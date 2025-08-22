@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Card, useTheme, ProgressBar} from 'react-native-paper';
-import {AppTheme} from '@/theme';
+import type {AppTheme} from '@/theme';
 
 interface ListCardProps {
     id: string;
