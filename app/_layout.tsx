@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
-import { useColorScheme, StatusBar } from 'react-native';
-import { PaperProvider } from 'react-native-paper';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useFonts } from 'expo-font';
+import {useState, useEffect} from 'react';
+import {useColorScheme, StatusBar} from 'react-native';
+import {PaperProvider} from 'react-native-paper';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { lightTheme, darkTheme } from '@/theme';
+import {lightTheme, darkTheme} from '@/theme';
 import TabLayout from './(tabs)/_layout';
+import {DatabaseProvider} from "@/components/DatabaseProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete
 SplashScreen.preventAutoHideAsync();
@@ -43,13 +44,15 @@ export default function RootLayout() {
 
     return (
         <SafeAreaProvider>
-            <PaperProvider theme={theme}>
-                <StatusBar
-                    barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                    backgroundColor={theme.colors.surface}
-                />
-                <TabLayout />
-            </PaperProvider>
+            <DatabaseProvider>
+                <PaperProvider theme={theme}>
+                    <StatusBar
+                        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                        backgroundColor={theme.colors.surface}
+                    />
+                    <TabLayout />
+                </PaperProvider>
+            </DatabaseProvider>
         </SafeAreaProvider>
     );
 }
