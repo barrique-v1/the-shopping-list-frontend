@@ -18,8 +18,13 @@ interface RecipeState {
     // Recipe Actions
     fetchRecipes: () => Promise<void>;
     fetchFavorites: () => Promise<void>;
-    createRecipe: (recipe: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>) => Promise<Recipe>;
-    updateRecipe: (id: string, updates: Partial<Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>>) => Promise<void>;
+    createRecipe: (
+        recipe: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>
+    ) => Promise<Recipe>;
+    updateRecipe: (
+        id: string,
+        updates: Partial<Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>>
+    ) => Promise<void>;
     deleteRecipe: (id: string, permanent?: boolean) => Promise<void>;
     duplicateRecipe: (id: string, newName?: string) => Promise<void>;
     selectRecipe: (id: string) => Promise<void>;
@@ -32,7 +37,11 @@ interface RecipeState {
     filterByTags: (tags: string[]) => void;
 
     // Shopping List Integration
-    addIngredientsToList: (recipeId: string, listId: string, servingsMultiplier?: number) => Promise<ListItem[]>;
+    addIngredientsToList: (
+        recipeId: string,
+        listId: string,
+        servingsMultiplier?: number
+    ) => Promise<ListItem[]>;
     scaleRecipe: (id: string, targetServings: number) => Promise<void>;
 
     // UI State
@@ -67,20 +76,24 @@ export const useRecipeStore = create<RecipeState>()(
                 fetchFavorites: async () => {
                     set({ isLoading: true, error: null });
                     try {
-                        const favorites = await recipeService.getFavoriteRecipes();
+                        const favorites =
+                            await recipeService.getFavoriteRecipes();
                         set({ favoriteRecipes: favorites, isLoading: false });
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
                     }
                 },
 
-                createRecipe: async (recipe: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>) => {
+                createRecipe: async (
+                    recipe: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>
+                ) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const newRecipe = await recipeService.createRecipe(recipe);
-                        set(state => ({
+                        const newRecipe =
+                            await recipeService.createRecipe(recipe);
+                        set((state) => ({
                             recipes: [newRecipe, ...state.recipes],
-                            isLoading: false
+                            isLoading: false,
                         }));
                         return newRecipe;
                     } catch (error) {
@@ -89,19 +102,27 @@ export const useRecipeStore = create<RecipeState>()(
                     }
                 },
 
-                updateRecipe: async (id: string, updates: Partial<Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>>) => {
+                updateRecipe: async (
+                    id: string,
+                    updates: Partial<
+                        Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>
+                    >
+                ) => {
                     set({ isLoading: true, error: null });
                     try {
                         await recipeService.updateRecipe(id, updates);
 
-                        set(state => ({
-                            recipes: state.recipes.map(recipe =>
-                                recipe.id === id ? { ...recipe, ...updates } : recipe
+                        set((state) => ({
+                            recipes: state.recipes.map((recipe) =>
+                                recipe.id === id
+                                    ? { ...recipe, ...updates }
+                                    : recipe
                             ),
-                            currentRecipe: state.currentRecipe?.id === id
-                                ? { ...state.currentRecipe, ...updates }
-                                : state.currentRecipe,
-                            isLoading: false
+                            currentRecipe:
+                                state.currentRecipe?.id === id
+                                    ? { ...state.currentRecipe, ...updates }
+                                    : state.currentRecipe,
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -114,11 +135,18 @@ export const useRecipeStore = create<RecipeState>()(
                     try {
                         await recipeService.deleteRecipe(id, permanent);
 
-                        set(state => ({
-                            recipes: state.recipes.filter(recipe => recipe.id !== id),
-                            favoriteRecipes: state.favoriteRecipes.filter(recipe => recipe.id !== id),
-                            currentRecipe: state.currentRecipe?.id === id ? null : state.currentRecipe,
-                            isLoading: false
+                        set((state) => ({
+                            recipes: state.recipes.filter(
+                                (recipe) => recipe.id !== id
+                            ),
+                            favoriteRecipes: state.favoriteRecipes.filter(
+                                (recipe) => recipe.id !== id
+                            ),
+                            currentRecipe:
+                                state.currentRecipe?.id === id
+                                    ? null
+                                    : state.currentRecipe,
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -129,10 +157,13 @@ export const useRecipeStore = create<RecipeState>()(
                 duplicateRecipe: async (id: string, newName?: string) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const newRecipe = await recipeService.duplicateRecipe(id, newName);
-                        set(state => ({
+                        const newRecipe = await recipeService.duplicateRecipe(
+                            id,
+                            newName
+                        );
+                        set((state) => ({
                             recipes: [newRecipe, ...state.recipes],
-                            isLoading: false
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -159,19 +190,33 @@ export const useRecipeStore = create<RecipeState>()(
                     try {
                         await recipeService.toggleFavorite(id);
 
-                        set(state => {
-                            const updatedRecipes = state.recipes.map(recipe =>
-                                recipe.id === id ? { ...recipe, isFavorite: !recipe.isFavorite } : recipe
+                        set((state) => {
+                            const updatedRecipes = state.recipes.map(
+                                (recipe) =>
+                                    recipe.id === id
+                                        ? {
+                                              ...recipe,
+                                              isFavorite: !recipe.isFavorite,
+                                          }
+                                        : recipe
                             );
 
-                            const updatedFavorites = updatedRecipes.filter(r => r.isFavorite);
+                            const updatedFavorites = updatedRecipes.filter(
+                                (r) => r.isFavorite
+                            );
 
                             return {
                                 recipes: updatedRecipes,
                                 favoriteRecipes: updatedFavorites,
-                                currentRecipe: state.currentRecipe?.id === id
-                                    ? { ...state.currentRecipe, isFavorite: !state.currentRecipe.isFavorite }
-                                    : state.currentRecipe
+                                currentRecipe:
+                                    state.currentRecipe?.id === id
+                                        ? {
+                                              ...state.currentRecipe,
+                                              isFavorite:
+                                                  !state.currentRecipe
+                                                      .isFavorite,
+                                          }
+                                        : state.currentRecipe,
                             };
                         });
                     } catch (error) {
@@ -183,13 +228,16 @@ export const useRecipeStore = create<RecipeState>()(
                     try {
                         await recipeService.rateRecipe(id, rating);
 
-                        set(state => ({
-                            recipes: state.recipes.map(recipe =>
-                                recipe.id === id ? { ...recipe, rating } : recipe
+                        set((state) => ({
+                            recipes: state.recipes.map((recipe) =>
+                                recipe.id === id
+                                    ? { ...recipe, rating }
+                                    : recipe
                             ),
-                            currentRecipe: state.currentRecipe?.id === id
-                                ? { ...state.currentRecipe, rating }
-                                : state.currentRecipe
+                            currentRecipe:
+                                state.currentRecipe?.id === id
+                                    ? { ...state.currentRecipe, rating }
+                                    : state.currentRecipe,
                         }));
                     } catch (error) {
                         set({ error: String(error) });
@@ -200,7 +248,8 @@ export const useRecipeStore = create<RecipeState>()(
                     set({ isLoading: true, error: null, searchQuery: query });
                     try {
                         if (query.trim()) {
-                            const results = await recipeService.searchRecipes(query);
+                            const results =
+                                await recipeService.searchRecipes(query);
                             set({ recipes: results, isLoading: false });
                         } else {
                             await get().fetchRecipes();
@@ -217,10 +266,18 @@ export const useRecipeStore = create<RecipeState>()(
                 },
 
                 // Shopping List Integration
-                addIngredientsToList: async (recipeId: string, listId: string, servingsMultiplier = 1) => {
+                addIngredientsToList: async (
+                    recipeId: string,
+                    listId: string,
+                    servingsMultiplier = 1
+                ) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const items = await recipeService.addIngredientsToList(recipeId, listId, servingsMultiplier);
+                        const items = await recipeService.addIngredientsToList(
+                            recipeId,
+                            listId,
+                            servingsMultiplier
+                        );
                         set({ isLoading: false });
                         return items;
                     } catch (error) {
@@ -231,13 +288,18 @@ export const useRecipeStore = create<RecipeState>()(
 
                 scaleRecipe: async (id: string, targetServings: number) => {
                     try {
-                        const { recipe, scaledIngredients } = await recipeService.scaleRecipe(id, targetServings);
+                        const { recipe, scaledIngredients } =
+                            await recipeService.scaleRecipe(id, targetServings);
 
                         // Update current recipe with scaled ingredients
-                        set(state => ({
-                            currentRecipe: state.currentRecipe?.id === id
-                                ? { ...recipe, ingredients: scaledIngredients }
-                                : state.currentRecipe
+                        set((state) => ({
+                            currentRecipe:
+                                state.currentRecipe?.id === id
+                                    ? {
+                                          ...recipe,
+                                          ingredients: scaledIngredients,
+                                      }
+                                    : state.currentRecipe,
                         }));
                     } catch (error) {
                         set({ error: String(error) });
@@ -246,7 +308,7 @@ export const useRecipeStore = create<RecipeState>()(
 
                 // UI State
                 setSearchQuery: (query: string) => set({ searchQuery: query }),
-                clearError: () => set({ error: null })
+                clearError: () => set({ error: null }),
             }),
             {
                 name: 'recipe-storage',
@@ -260,15 +322,15 @@ export const useRecipeStore = create<RecipeState>()(
                     },
                     removeItem: async (name) => {
                         await AsyncStorage.removeItem(name);
-                    }
+                    },
                 },
                 partialize: (state) => ({
-                    filterTags: state.filterTags
-                })
+                    filterTags: state.filterTags,
+                }),
             }
         ),
         {
-            name: 'recipe-store'
+            name: 'recipe-store',
         }
     )
 );

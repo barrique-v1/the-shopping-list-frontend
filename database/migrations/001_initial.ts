@@ -1,5 +1,5 @@
 // src/database/migrations/001_initial.ts
-import { Migration } from './types';
+import type { Migration } from './types';
 import { SCHEMA } from '../schema';
 
 export const initialMigration: Migration = {
@@ -16,5 +16,5 @@ export const initialMigration: Migration = {
     DROP TABLE IF EXISTS recipes;
     DROP TABLE IF EXISTS list_items;
     DROP TABLE IF EXISTS lists;
-  `
+  `,
 };

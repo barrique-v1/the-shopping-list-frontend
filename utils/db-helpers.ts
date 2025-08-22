@@ -17,7 +17,7 @@ export class DatabaseHelpers {
             const fileUri = `${FileSystem.documentDirectory}${fileName}`;
 
             await FileSystem.writeAsStringAsync(fileUri, json, {
-                encoding: FileSystem.EncodingType.UTF8
+                encoding: FileSystem.EncodingType.UTF8,
             });
 
             if (await Sharing.isAvailableAsync()) {
@@ -33,11 +33,14 @@ export class DatabaseHelpers {
     /**
      * Import database from a JSON file
      */
-    static async importFromFile(): Promise<{ success: boolean; message: string }> {
+    static async importFromFile(): Promise<{
+        success: boolean;
+        message: string;
+    }> {
         try {
             const result = await DocumentPicker.getDocumentAsync({
                 type: 'application/json',
-                copyToCacheDirectory: true
+                copyToCacheDirectory: true,
             });
 
             if (result.type === 'cancel') {
@@ -45,7 +48,7 @@ export class DatabaseHelpers {
             }
 
             const content = await FileSystem.readAsStringAsync(result.uri, {
-                encoding: FileSystem.EncodingType.UTF8
+                encoding: FileSystem.EncodingType.UTF8,
             });
 
             const data = importExportService.parseImportJSON(content);
@@ -54,18 +57,18 @@ export class DatabaseHelpers {
             if (importResult.errors.length > 0) {
                 return {
                     success: false,
-                    message: `Import completed with errors: ${importResult.errors.join(', ')}`
+                    message: `Import completed with errors: ${importResult.errors.join(', ')}`,
                 };
             }
 
             return {
                 success: true,
-                message: `Successfully imported ${importResult.listsImported} lists and ${importResult.recipesImported} recipes`
+                message: `Successfully imported ${importResult.listsImported} lists and ${importResult.recipesImported} recipes`,
             };
         } catch (error) {
             return {
                 success: false,
-                message: `Import failed: ${error}`
+                message: `Import failed: ${error}`,
             };
         }
     }

@@ -79,5 +79,5 @@ export const SCHEMA = {
     CREATE INDEX IF NOT EXISTS idx_recipe_ingredients_recipe_id ON recipe_ingredients(recipe_id);
     CREATE INDEX IF NOT EXISTS idx_recipes_deleted ON recipes(deleted_at);
     CREATE INDEX IF NOT EXISTS idx_recipes_favorite ON recipes(is_favorite);
-  `
+  `,
 };

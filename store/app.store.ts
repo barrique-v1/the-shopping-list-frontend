@@ -26,7 +26,9 @@ interface AppState {
 
     // Import/Export
     exportData: () => Promise<string>;
-    importData: (jsonData: string) => Promise<{ success: boolean; message: string }>;
+    importData: (
+        jsonData: string
+    ) => Promise<{ success: boolean; message: string }>;
 
     // Settings Actions
     setTheme: (theme: 'light' | 'dark' | 'system') => void;
@@ -63,13 +65,13 @@ export const useAppStore = create<AppState>()(
 
                         set({
                             isInitialized: true,
-                            isDatabaseReady: true
+                            isDatabaseReady: true,
                         });
                     } catch (error) {
                         console.error('Failed to initialize app:', error);
                         set({
                             isInitialized: true,
-                            isDatabaseReady: false
+                            isDatabaseReady: false,
                         });
                     }
                 },
@@ -92,7 +94,7 @@ export const useAppStore = create<AppState>()(
                             defaultListView: 'grid',
                             showCompletedItems: true,
                             autoDeleteCompleted: false,
-                            autoDeleteDays: 7
+                            autoDeleteDays: 7,
                         });
 
                         // Re-initialize
@@ -114,24 +116,26 @@ export const useAppStore = create<AppState>()(
 
                 importData: async (jsonData: string) => {
                     try {
-                        const data = importExportService.parseImportJSON(jsonData);
-                        const result = await importExportService.importData(data);
+                        const data =
+                            importExportService.parseImportJSON(jsonData);
+                        const result =
+                            await importExportService.importData(data);
 
                         if (result.errors.length > 0) {
                             return {
                                 success: false,
-                                message: `Import completed with errors: ${result.errors.join(', ')}`
+                                message: `Import completed with errors: ${result.errors.join(', ')}`,
                             };
                         }
 
                         return {
                             success: true,
-                            message: `Successfully imported ${result.listsImported} lists and ${result.recipesImported} recipes`
+                            message: `Successfully imported ${result.listsImported} lists and ${result.recipesImported} recipes`,
                         };
                     } catch (error) {
                         return {
                             success: false,
-                            message: `Import failed: ${error}`
+                            message: `Import failed: ${error}`,
                         };
                     }
                 },
@@ -140,9 +144,11 @@ export const useAppStore = create<AppState>()(
                 setTheme: (theme) => set({ theme }),
                 setLanguage: (language) => set({ language }),
                 setDefaultListView: (view) => set({ defaultListView: view }),
-                setShowCompletedItems: (show) => set({ showCompletedItems: show }),
-                setAutoDeleteCompleted: (enabled) => set({ autoDeleteCompleted: enabled }),
-                setAutoDeleteDays: (days) => set({ autoDeleteDays: days })
+                setShowCompletedItems: (show) =>
+                    set({ showCompletedItems: show }),
+                setAutoDeleteCompleted: (enabled) =>
+                    set({ autoDeleteCompleted: enabled }),
+                setAutoDeleteDays: (days) => set({ autoDeleteDays: days }),
             }),
             {
                 name: 'app-storage',
@@ -156,12 +162,12 @@ export const useAppStore = create<AppState>()(
                     },
                     removeItem: async (name) => {
                         await AsyncStorage.removeItem(name);
-                    }
-                }
+                    },
+                },
             }
         ),
         {
-            name: 'app-store'
+            name: 'app-store',
         }
     )
 );

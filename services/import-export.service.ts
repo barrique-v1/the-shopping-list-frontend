@@ -26,7 +26,7 @@ export class ImportExportService {
             version: this.EXPORT_VERSION,
             exportedAt: new Date().toISOString(),
             lists,
-            recipes
+            recipes,
         };
     }
 
@@ -43,7 +43,7 @@ export class ImportExportService {
             version: this.EXPORT_VERSION,
             exportedAt: new Date().toISOString(),
             lists: [list],
-            recipes: []
+            recipes: [],
         };
     }
 
@@ -57,7 +57,7 @@ export class ImportExportService {
             version: this.EXPORT_VERSION,
             exportedAt: new Date().toISOString(),
             lists: [],
-            recipes: [recipe]
+            recipes: [recipe],
         };
     }
 
@@ -74,16 +74,24 @@ export class ImportExportService {
         if (data.lists) {
             for (const list of data.lists) {
                 try {
-                    const newList = await listService.createList(list.name, list.description);
+                    const newList = await listService.createList(
+                        list.name,
+                        list.description
+                    );
 
                     // Import items if present
                     if ((list as any).items) {
-                        await listItemService.addMultipleItems(newList.id, (list as any).items);
+                        await listItemService.addMultipleItems(
+                            newList.id,
+                            (list as any).items
+                        );
                     }
 
                     listsImported++;
                 } catch (error) {
-                    errors.push(`Failed to import list "${list.name}": ${error}`);
+                    errors.push(
+                        `Failed to import list "${list.name}": ${error}`
+                    );
                 }
             }
         }
@@ -103,11 +111,13 @@ export class ImportExportService {
                         tags: recipe.tags,
                         ingredients: recipe.ingredients,
                         isFavorite: recipe.isFavorite,
-                        rating: recipe.rating
+                        rating: recipe.rating,
                     });
                     recipesImported++;
                 } catch (error) {
-                    errors.push(`Failed to import recipe "${recipe.name}": ${error}`);
+                    errors.push(
+                        `Failed to import recipe "${recipe.name}": ${error}`
+                    );
                 }
             }
         }
@@ -115,7 +125,7 @@ export class ImportExportService {
         return {
             listsImported,
             recipesImported,
-            errors
+            errors,
         };
     }
 

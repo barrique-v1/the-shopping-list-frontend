@@ -1,5 +1,5 @@
 // src/database/migrations/002_add_indexes.ts
-import { Migration } from './types';
+import type { Migration } from './types';
 import { SCHEMA } from '../schema';
 
 export const addIndexesMigration: Migration = {
@@ -14,5 +14,5 @@ export const addIndexesMigration: Migration = {
     DROP INDEX IF EXISTS idx_recipe_ingredients_recipe_id;
     DROP INDEX IF EXISTS idx_recipes_deleted;
     DROP INDEX IF EXISTS idx_recipes_favorite;
-  `
+  `,
 };

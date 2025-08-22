@@ -30,7 +30,7 @@ export class UnitConverter {
 
         // Direct conversion
         const directConversion = conversions.find(
-            c => c.from === from && c.to === to
+            (c) => c.from === from && c.to === to
         );
         if (directConversion) {
             return value * directConversion.factor;
@@ -40,7 +40,7 @@ export class UnitConverter {
         for (const conv1 of conversions) {
             if (conv1.from === from) {
                 const conv2 = conversions.find(
-                    c => c.from === conv1.to && c.to === to
+                    (c) => c.from === conv1.to && c.to === to
                 );
                 if (conv2) {
                     return value * conv1.factor * conv2.factor;
@@ -55,15 +55,15 @@ export class UnitConverter {
         const compatible: Set<Unit> = new Set([unit]);
 
         // Find all units that can be converted to/from
-        conversions.forEach(conv => {
+        conversions.forEach((conv) => {
             if (conv.from === unit) compatible.add(conv.to);
             if (conv.to === unit) compatible.add(conv.from);
         });
 
         // Find indirect conversions
         const compatibleArray = Array.from(compatible);
-        compatibleArray.forEach(u => {
-            conversions.forEach(conv => {
+        compatibleArray.forEach((u) => {
+            conversions.forEach((conv) => {
                 if (conv.from === u) compatible.add(conv.to);
                 if (conv.to === u) compatible.add(conv.from);
             });
@@ -73,7 +73,9 @@ export class UnitConverter {
     }
 
     static isWeightUnit(unit: Unit): boolean {
-        return [Unit.GRAM, Unit.KILOGRAM, Unit.POUND, Unit.OUNCE].includes(unit);
+        return [Unit.GRAM, Unit.KILOGRAM, Unit.POUND, Unit.OUNCE].includes(
+            unit
+        );
     }
 
     static isVolumeUnit(unit: Unit): boolean {
@@ -83,7 +85,7 @@ export class UnitConverter {
             Unit.CUP,
             Unit.TABLESPOON,
             Unit.TEASPOON,
-            Unit.FLUID_OUNCE
+            Unit.FLUID_OUNCE,
         ].includes(unit);
     }
 
@@ -98,7 +100,7 @@ export class UnitConverter {
             Unit.BUNCH,
             Unit.SLICE,
             Unit.PINCH,
-            Unit.HANDFUL
+            Unit.HANDFUL,
         ].includes(unit);
     }
 }

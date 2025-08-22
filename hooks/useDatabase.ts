@@ -29,6 +29,6 @@ export function useDatabase() {
     return {
         isReady: isDatabaseReady,
         isLoading,
-        error
+        error,
     };
 }

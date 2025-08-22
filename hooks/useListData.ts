@@ -11,7 +11,7 @@ export function useListData(listId?: string) {
         error,
         fetchLists,
         selectList,
-        clearCurrentList
+        clearCurrentList,
     } = useListStore();
 
     useEffect(() => {
@@ -35,6 +35,6 @@ export function useListData(listId?: string) {
         currentList,
         items: currentListItems,
         isLoading,
-        error
+        error,
     };
 }

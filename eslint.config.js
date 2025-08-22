@@ -2,6 +2,8 @@
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const typescriptEslint = require('@typescript-eslint/eslint-plugin');
+const typescriptParser = require('@typescript-eslint/parser');
 
 module.exports = defineConfig([
     // Base Expo configuration
@@ -19,6 +21,19 @@ module.exports = defineConfig([
             'ios/*',
             'android/*'
         ],
+
+        files: ['**/*.{ts,tsx}'],
+        languageOptions: {
+            parser: typescriptParser,
+            parserOptions: {
+                ecmaVersion: 'latest',
+                sourceType: 'module',
+                project: './tsconfig.json',
+            },
+        },
+        plugins: {
+            '@typescript-eslint': typescriptEslint,
+        },
 
         rules: {
             // Prevent unused variables (catches typos and dead code)

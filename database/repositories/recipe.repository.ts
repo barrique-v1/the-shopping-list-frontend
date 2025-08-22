@@ -1,5 +1,5 @@
 // src/database/repositories/recipe.repository.ts
-import { Recipe, RecipeIngredient } from '@/types';
+import type { Recipe, RecipeIngredient } from '@/types/entities';
 import { BaseRepository } from './base.repository';
 import { Difficulty } from '@/types/constants';
 
@@ -11,7 +11,9 @@ interface DbRecipe extends Recipe {
 export class RecipeRepository extends BaseRepository<DbRecipe> {
     protected tableName = 'recipes';
 
-    async create(data: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>): Promise<Recipe> {
+    async create(
+        data: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>
+    ): Promise<Recipe> {
         const db = await this.getDb();
         const id = this.generateId();
         const now = this.getCurrentTimestamp();
@@ -35,7 +37,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
                 data.isFavorite ? 1 : 0,
                 data.rating || null,
                 now,
-                now
+                now,
             ]
         );
 
@@ -45,7 +47,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
             await this.createIngredient({
                 ...ingredient,
                 recipeId: id,
-                position: i
+                position: i,
             });
         }
 
@@ -63,11 +65,14 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
             isFavorite: data.isFavorite,
             rating: data.rating,
             createdAt: now,
-            updatedAt: now
+            updatedAt: now,
         };
     }
 
-    async update(id: string, data: Partial<Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>>): Promise<boolean> {
+    async update(
+        id: string,
+        data: Partial<Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>>
+    ): Promise<boolean> {
         const db = await this.getDb();
         const now = this.getCurrentTimestamp();
 
@@ -156,7 +161,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
             difficulty: recipe.difficulty as Difficulty,
             instructions: recipe.instructions,
             tags: JSON.parse(recipe.tags || '[]'),
-            ingredients: ingredientsResult.map(ing => ({
+            ingredients: ingredientsResult.map((ing) => ({
                 id: ing.id,
                 recipeId: ing.recipe_id,
                 name: ing.name,
@@ -165,12 +170,12 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
                 category: ing.category,
                 isOptional: ing.is_optional === 1,
                 notes: ing.notes,
-                position: ing.position
+                position: ing.position,
             })),
             isFavorite: recipe.is_favorite === 1,
             rating: recipe.rating,
             createdAt: recipe.created_at,
-            updatedAt: recipe.updated_at
+            updatedAt: recipe.updated_at,
         };
     }
 
@@ -181,7 +186,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
             'SELECT * FROM recipes WHERE deleted_at IS NULL ORDER BY updated_at DESC'
         );
 
-        const recipeIds = recipes.map(r => r.id);
+        const recipeIds = recipes.map((r) => r.id);
         if (recipeIds.length === 0) return [];
 
         const placeholders = recipeIds.map(() => '?').join(',');
@@ -192,7 +197,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
 
         // Group ingredients by recipe
         const ingredientsByRecipe = new Map<string, RecipeIngredient[]>();
-        ingredients.forEach(ing => {
+        ingredients.forEach((ing) => {
             if (!ingredientsByRecipe.has(ing.recipe_id)) {
                 ingredientsByRecipe.set(ing.recipe_id, []);
             }
@@ -205,11 +210,11 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
                 category: ing.category,
                 isOptional: ing.is_optional === 1,
                 notes: ing.notes,
-                position: ing.position
+                position: ing.position,
             });
         });
 
-        return recipes.map(recipe => ({
+        return recipes.map((recipe) => ({
             id: recipe.id,
             name: recipe.name,
             description: recipe.description,
@@ -223,7 +228,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
             isFavorite: recipe.is_favorite === 1,
             rating: recipe.rating,
             createdAt: recipe.created_at,
-            updatedAt: recipe.updated_at
+            updatedAt: recipe.updated_at,
         }));
     }
 
@@ -256,7 +261,9 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
         return this.hydrateRecipes(results);
     }
 
-    private async createIngredient(ingredient: Omit<RecipeIngredient, 'id'>): Promise<void> {
+    private async createIngredient(
+        ingredient: Omit<RecipeIngredient, 'id'>
+    ): Promise<void> {
         const db = await this.getDb();
         const id = this.generateId();
 
@@ -274,12 +281,15 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
                 ingredient.category,
                 ingredient.isOptional ? 1 : 0,
                 ingredient.notes || null,
-                ingredient.position
+                ingredient.position,
             ]
         );
     }
 
-    private async updateIngredients(recipeId: string, ingredients: RecipeIngredient[]): Promise<void> {
+    private async updateIngredients(
+        recipeId: string,
+        ingredients: RecipeIngredient[]
+    ): Promise<void> {
         const db = await this.getDb();
 
         await dbClient.transaction(async (db) => {
@@ -308,7 +318,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
                         ingredient.category,
                         ingredient.isOptional ? 1 : 0,
                         ingredient.notes || null,
-                        i
+                        i,
                     ]
                 );
             }
@@ -319,7 +329,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
         if (rows.length === 0) return [];
 
         const db = await this.getDb();
-        const recipeIds = rows.map(r => r.id);
+        const recipeIds = rows.map((r) => r.id);
         const placeholders = recipeIds.map(() => '?').join(',');
 
         const ingredients = await db.getAllAsync<any>(
@@ -328,7 +338,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
         );
 
         const ingredientsByRecipe = new Map<string, RecipeIngredient[]>();
-        ingredients.forEach(ing => {
+        ingredients.forEach((ing) => {
             if (!ingredientsByRecipe.has(ing.recipe_id)) {
                 ingredientsByRecipe.set(ing.recipe_id, []);
             }
@@ -341,11 +351,11 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
                 category: ing.category,
                 isOptional: ing.is_optional === 1,
                 notes: ing.notes,
-                position: ing.position
+                position: ing.position,
             });
         });
 
-        return rows.map(recipe => ({
+        return rows.map((recipe) => ({
             id: recipe.id,
             name: recipe.name,
             description: recipe.description,
@@ -359,7 +369,7 @@ export class RecipeRepository extends BaseRepository<DbRecipe> {
             isFavorite: recipe.is_favorite === 1,
             rating: recipe.rating,
             createdAt: recipe.created_at,
-            updatedAt: recipe.updated_at
+            updatedAt: recipe.updated_at,
         }));
     }
 }

@@ -11,11 +11,14 @@ export class ListService {
 
         return listRepository.create({
             name: name.trim(),
-            description: description?.trim()
+            description: description?.trim(),
         });
     }
 
-    async updateList(id: string, updates: { name?: string; description?: string }): Promise<boolean> {
+    async updateList(
+        id: string,
+        updates: { name?: string; description?: string }
+    ): Promise<boolean> {
         const cleanUpdates: any = {};
 
         if (updates.name !== undefined) {
@@ -53,14 +56,14 @@ export class ListService {
             createdAt: list.createdAt,
             updatedAt: list.updatedAt,
             totalItems: list.itemCount,
-            completedItems: list.checkedCount
+            completedItems: list.checkedCount,
         };
     }
 
     async getAllLists(): Promise<(List & { progress: number })[]> {
         const lists = await listRepository.getAllWithCounts();
 
-        return lists.map(list => ({
+        return lists.map((list) => ({
             id: list.id,
             name: list.name,
             description: list.description,
@@ -68,7 +71,10 @@ export class ListService {
             updatedAt: list.updatedAt,
             totalItems: list.itemCount,
             completedItems: list.checkedCount,
-            progress: list.itemCount > 0 ? (list.checkedCount / list.itemCount) * 100 : 0
+            progress:
+                list.itemCount > 0
+                    ? (list.checkedCount / list.itemCount) * 100
+                    : 0,
         }));
     }
 
@@ -98,7 +104,7 @@ export class ListService {
                 isChecked: false, // Reset checked state
                 notes: item.notes,
                 position: item.position,
-                checkedAt: undefined
+                checkedAt: undefined,
             });
         }
 
@@ -107,7 +113,7 @@ export class ListService {
 
     async clearCheckedItems(listId: string): Promise<number> {
         const items = await listItemRepository.findByListId(listId);
-        const checkedItems = items.filter(item => item.isChecked);
+        const checkedItems = items.filter((item) => item.isChecked);
 
         let deletedCount = 0;
         for (const item of checkedItems) {
@@ -120,11 +126,13 @@ export class ListService {
 
     async uncheckAllItems(listId: string): Promise<number> {
         const items = await listItemRepository.findByListId(listId);
-        const checkedItems = items.filter(item => item.isChecked);
+        const checkedItems = items.filter((item) => item.isChecked);
 
         let updatedCount = 0;
         for (const item of checkedItems) {
-            const success = await listItemRepository.update(item.id, { isChecked: false });
+            const success = await listItemRepository.update(item.id, {
+                isChecked: false,
+            });
             if (success) updatedCount++;
         }
 

@@ -12,7 +12,7 @@ export function useRecipeData(recipeId?: string) {
         fetchRecipes,
         fetchFavorites,
         selectRecipe,
-        clearCurrentRecipe
+        clearCurrentRecipe,
     } = useRecipeStore();
 
     useEffect(() => {
@@ -37,6 +37,6 @@ export function useRecipeData(recipeId?: string) {
         currentRecipe,
         favoriteRecipes,
         isLoading,
-        error
+        error,
     };
 }

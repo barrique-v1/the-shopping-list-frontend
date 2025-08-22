@@ -1,5 +1,5 @@
 // src/components/DatabaseProvider.tsx
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { useDatabase } from '@/hooks/useDatabase';
 
@@ -10,18 +10,26 @@ interface DatabaseProviderProps {
 }
 
 export function DatabaseProvider({
-                                     children,
-                                     loadingComponent,
-                                     errorComponent
-                                 }: DatabaseProviderProps) {
+    children,
+    loadingComponent,
+    errorComponent,
+}: DatabaseProviderProps) {
     const { isReady, isLoading, error } = useDatabase();
 
     if (isLoading) {
         return (
             loadingComponent || (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
                     <ActivityIndicator size="large" />
-                    <Text style={{ marginTop: 10 }}>Initializing database...</Text>
+                    <Text style={{ marginTop: 10 }}>
+                        Initializing database...
+                    </Text>
                 </View>
             )
         );
@@ -30,7 +38,13 @@ export function DatabaseProvider({
     if (error) {
         return (
             errorComponent?.(error) || (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
                     <Text>Database Error: {error}</Text>
                 </View>
             )
@@ -39,7 +53,13 @@ export function DatabaseProvider({
 
     if (!isReady) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
                 <Text>Database not ready</Text>
             </View>
         );

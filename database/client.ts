@@ -56,7 +56,9 @@ class DatabaseClient {
         // Run pending migrations
         for (const migration of migrations) {
             if (migration.version > currentVersion) {
-                console.log(`Running migration ${migration.version}: ${migration.name}`);
+                console.log(
+                    `Running migration ${migration.version}: ${migration.name}`
+                );
 
                 await this.db.withTransactionAsync(async () => {
                     // Run migration

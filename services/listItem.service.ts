@@ -28,7 +28,7 @@ export class ListItemService {
             isChecked: false,
             notes: data.notes?.trim(),
             position: 0, // Will be calculated
-            checkedAt: undefined
+            checkedAt: undefined,
         });
     }
 
@@ -100,13 +100,13 @@ export class ListItemService {
 
     async addMultipleItems(
         listId: string,
-        items: Array<{
+        items: {
             name: string;
             quantity?: string;
             unit?: Unit;
             category?: Category;
             notes?: string;
-        }>
+        }[]
     ): Promise<ListItem[]> {
         const createdItems: ListItem[] = [];
 
@@ -124,13 +124,13 @@ export class ListItemService {
 
     async parseAndAddItems(listId: string, text: string): Promise<ListItem[]> {
         // Parse text input (one item per line)
-        const lines = text.split('\n').filter(line => line.trim().length > 0);
-        const items: Array<{
+        const lines = text.split('\n').filter((line) => line.trim().length > 0);
+        const items: {
             name: string;
             quantity?: string;
             unit?: Unit;
             category?: Category;
-        }> = [];
+        }[] = [];
 
         for (const line of lines) {
             // Simple parsing: "2x Tomaten" or "500g Mehl" or just "Milch"
@@ -143,9 +143,10 @@ export class ListItemService {
                 let unit: Unit | undefined;
                 if (unitStr) {
                     const unitLower = unitStr.toLowerCase();
-                    unit = Object.values(Unit).find(u =>
-                        u.toLowerCase() === unitLower ||
-                        u.toLowerCase().startsWith(unitLower)
+                    unit = Object.values(Unit).find(
+                        (u) =>
+                            u.toLowerCase() === unitLower ||
+                            u.toLowerCase().startsWith(unitLower)
                     );
                 }
 
@@ -153,7 +154,7 @@ export class ListItemService {
                     name: name.trim(),
                     quantity,
                     unit: unit || Unit.PIECE,
-                    category: this.suggestCategory(name.trim())
+                    category: this.suggestCategory(name.trim()),
                 });
             } else {
                 // No quantity/unit found, just add the name
@@ -161,7 +162,7 @@ export class ListItemService {
                     name: line.trim(),
                     quantity: '1',
                     unit: Unit.PIECE,
-                    category: this.suggestCategory(line.trim())
+                    category: this.suggestCategory(line.trim()),
                 });
             }
         }
@@ -174,20 +175,60 @@ export class ListItemService {
 
         // Simple keyword-based categorization
         const categoryKeywords: Record<Category, string[]> = {
-            [Category.FRUITS]: ['apfel', 'birne', 'banane', 'orange', 'beere', 'frucht', 'obst'],
-            [Category.VEGETABLES]: ['tomate', 'gurke', 'salat', 'karotte', 'zwiebel', 'gemüse', 'kartoffel'],
+            [Category.FRUITS]: [
+                'apfel',
+                'birne',
+                'banane',
+                'orange',
+                'beere',
+                'frucht',
+                'obst',
+            ],
+            [Category.VEGETABLES]: [
+                'tomate',
+                'gurke',
+                'salat',
+                'karotte',
+                'zwiebel',
+                'gemüse',
+                'kartoffel',
+            ],
             [Category.MEAT]: ['fleisch', 'hack', 'steak', 'schnitzel', 'wurst'],
             [Category.FISH]: ['fisch', 'lachs', 'thunfisch', 'forelle'],
             [Category.DAIRY]: ['milch', 'joghurt', 'quark', 'sahne', 'butter'],
             [Category.CHEESE]: ['käse', 'gouda', 'mozzarella', 'parmesan'],
-            [Category.GRAINS]: ['nudel', 'reis', 'mehl', 'brot', 'pasta', 'getreide'],
-            [Category.BEVERAGES]: ['wasser', 'saft', 'cola', 'getränk', 'tee', 'kaffee'],
-            [Category.CLEANING]: ['reiniger', 'putzmittel', 'seife', 'waschmittel'],
-            [Category.PERSONAL_CARE]: ['shampoo', 'duschgel', 'zahnpasta', 'deo'],
+            [Category.GRAINS]: [
+                'nudel',
+                'reis',
+                'mehl',
+                'brot',
+                'pasta',
+                'getreide',
+            ],
+            [Category.BEVERAGES]: [
+                'wasser',
+                'saft',
+                'cola',
+                'getränk',
+                'tee',
+                'kaffee',
+            ],
+            [Category.CLEANING]: [
+                'reiniger',
+                'putzmittel',
+                'seife',
+                'waschmittel',
+            ],
+            [Category.PERSONAL_CARE]: [
+                'shampoo',
+                'duschgel',
+                'zahnpasta',
+                'deo',
+            ],
         };
 
         for (const [category, keywords] of Object.entries(categoryKeywords)) {
-            if (keywords.some(keyword => name.includes(keyword))) {
+            if (keywords.some((keyword) => name.includes(keyword))) {
                 return category as Category;
             }
         }

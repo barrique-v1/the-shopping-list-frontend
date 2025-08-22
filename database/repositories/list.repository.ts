@@ -1,5 +1,5 @@
 // src/database/repositories/list.repository.ts
-import { List, ListItem } from '@/types';
+import type { List } from '@/types/entities';
 import { BaseRepository } from './base.repository';
 
 interface DbList extends List {
@@ -11,7 +11,12 @@ interface DbList extends List {
 export class ListRepository extends BaseRepository<DbList> {
     protected tableName = 'lists';
 
-    async create(data: Omit<List, 'id' | 'createdAt' | 'updatedAt' | 'totalItems' | 'completedItems'>): Promise<List> {
+    async create(
+        data: Omit<
+            List,
+            'id' | 'createdAt' | 'updatedAt' | 'totalItems' | 'completedItems'
+        >
+    ): Promise<List> {
         const db = await this.getDb();
         const id = this.generateId();
         const now = this.getCurrentTimestamp();
@@ -29,11 +34,14 @@ export class ListRepository extends BaseRepository<DbList> {
             createdAt: now,
             updatedAt: now,
             totalItems: 0,
-            completedItems: 0
+            completedItems: 0,
         };
     }
 
-    async update(id: string, data: Partial<Omit<List, 'id' | 'createdAt' | 'updatedAt'>>): Promise<boolean> {
+    async update(
+        id: string,
+        data: Partial<Omit<List, 'id' | 'createdAt' | 'updatedAt'>>
+    ): Promise<boolean> {
         const db = await this.getDb();
         const now = this.getCurrentTimestamp();
 
@@ -67,7 +75,9 @@ export class ListRepository extends BaseRepository<DbList> {
         return result.changes > 0;
     }
 
-    async getWithItemCounts(id: string): Promise<(List & { itemCount: number; checkedCount: number }) | null> {
+    async getWithItemCounts(
+        id: string
+    ): Promise<(List & { itemCount: number; checkedCount: number }) | null> {
         const db = await this.getDb();
         const result = await db.getAllAsync<any>(
             `SELECT 
@@ -93,11 +103,13 @@ export class ListRepository extends BaseRepository<DbList> {
             totalItems: row.total_items,
             completedItems: row.completed_items,
             itemCount: row.itemCount || 0,
-            checkedCount: row.checkedCount || 0
+            checkedCount: row.checkedCount || 0,
         };
     }
 
-    async getAllWithCounts(): Promise<(List & { itemCount: number; checkedCount: number })[]> {
+    async getAllWithCounts(): Promise<
+        (List & { itemCount: number; checkedCount: number })[]
+    > {
         const db = await this.getDb();
         const results = await db.getAllAsync<any>(
             `SELECT 
@@ -111,7 +123,7 @@ export class ListRepository extends BaseRepository<DbList> {
        ORDER BY l.updated_at DESC`
         );
 
-        return results.map(row => ({
+        return results.map((row) => ({
             id: row.id,
             name: row.name,
             description: row.description,
@@ -120,7 +132,7 @@ export class ListRepository extends BaseRepository<DbList> {
             totalItems: row.total_items,
             completedItems: row.completed_items,
             itemCount: row.itemCount || 0,
-            checkedCount: row.checkedCount || 0
+            checkedCount: row.checkedCount || 0,
         }));
     }
 }

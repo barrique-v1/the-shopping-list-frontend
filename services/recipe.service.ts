@@ -4,7 +4,9 @@ import { recipeRepository, listItemRepository } from '@/database/repositories';
 import { Difficulty } from '@/types/constants';
 
 export class RecipeService {
-    async createRecipe(data: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>): Promise<Recipe> {
+    async createRecipe(
+        data: Omit<Recipe, 'id' | 'createdAt' | 'updatedAt'>
+    ): Promise<Recipe> {
         if (!data.name || data.name.trim().length === 0) {
             throw new Error('Recipe name is required');
         }
@@ -16,7 +18,7 @@ export class RecipeService {
         return recipeRepository.create({
             ...data,
             name: data.name.trim(),
-            description: data.description?.trim()
+            description: data.description?.trim(),
         });
     }
 
@@ -38,12 +40,21 @@ export class RecipeService {
         }
 
         // Copy other fields
-        ['servings', 'prepTime', 'cookTime', 'difficulty', 'instructions', 'tags', 'ingredients', 'isFavorite', 'rating']
-            .forEach(field => {
-                if (updates[field as keyof typeof updates] !== undefined) {
-                    cleanUpdates[field] = updates[field as keyof typeof updates];
-                }
-            });
+        [
+            'servings',
+            'prepTime',
+            'cookTime',
+            'difficulty',
+            'instructions',
+            'tags',
+            'ingredients',
+            'isFavorite',
+            'rating',
+        ].forEach((field) => {
+            if (updates[field as keyof typeof updates] !== undefined) {
+                cleanUpdates[field] = updates[field as keyof typeof updates];
+            }
+        });
 
         return recipeRepository.update(id, cleanUpdates);
     }
@@ -66,7 +77,7 @@ export class RecipeService {
 
     async getFavoriteRecipes(): Promise<Recipe[]> {
         const all = await this.getAllRecipes();
-        return all.filter(r => r.isFavorite);
+        return all.filter((r) => r.isFavorite);
     }
 
     async searchRecipes(query: string): Promise<Recipe[]> {
@@ -106,7 +117,9 @@ export class RecipeService {
             if (servingsMultiplier !== 1 && ingredient.quantity) {
                 const numericQuantity = parseFloat(ingredient.quantity);
                 if (!isNaN(numericQuantity)) {
-                    adjustedQuantity = (numericQuantity * servingsMultiplier).toString();
+                    adjustedQuantity = (
+                        numericQuantity * servingsMultiplier
+                    ).toString();
                 }
             }
 
@@ -120,7 +133,7 @@ export class RecipeService {
                 isChecked: false,
                 notes: ingredient.notes,
                 position: 0,
-                checkedAt: undefined
+                checkedAt: undefined,
             });
 
             createdItems.push(item);
@@ -144,13 +157,13 @@ export class RecipeService {
             difficulty: original.difficulty,
             instructions: original.instructions,
             tags: [...original.tags],
-            ingredients: original.ingredients.map(ing => ({
+            ingredients: original.ingredients.map((ing) => ({
                 ...ing,
                 id: '', // Will be generated
-                recipeId: '' // Will be set
+                recipeId: '', // Will be set
             })),
             isFavorite: false,
-            rating: undefined
+            rating: undefined,
         });
     }
 
@@ -165,7 +178,7 @@ export class RecipeService {
 
         const multiplier = targetServings / recipe.servings;
 
-        const scaledIngredients = recipe.ingredients.map(ingredient => {
+        const scaledIngredients = recipe.ingredients.map((ingredient) => {
             let scaledQuantity = ingredient.quantity;
 
             if (ingredient.quantity) {
@@ -179,16 +192,16 @@ export class RecipeService {
 
             return {
                 ...ingredient,
-                quantity: scaledQuantity
+                quantity: scaledQuantity,
             };
         });
 
         return {
             recipe: {
                 ...recipe,
-                servings: targetServings
+                servings: targetServings,
             },
-            scaledIngredients
+            scaledIngredients,
         };
     }
 }

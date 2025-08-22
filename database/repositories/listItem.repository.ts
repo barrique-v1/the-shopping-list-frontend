@@ -1,5 +1,5 @@
 // src/database/repositories/listItem.repository.ts
-import { ListItem } from '@/types';
+import type { ListItem } from '@/types/entities';
 import { BaseRepository } from './base.repository';
 import { Unit, Category } from '@/types/constants';
 
@@ -11,7 +11,9 @@ interface DbListItem extends ListItem {
 export class ListItemRepository extends BaseRepository<DbListItem> {
     protected tableName = 'list_items';
 
-    async create(data: Omit<ListItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<ListItem> {
+    async create(
+        data: Omit<ListItem, 'id' | 'createdAt' | 'updatedAt'>
+    ): Promise<ListItem> {
         const db = await this.getDb();
         const id = this.generateId();
         const now = this.getCurrentTimestamp();
@@ -44,7 +46,7 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
                 position,
                 now,
                 now,
-                data.checkedAt || null
+                data.checkedAt || null,
             ]
         );
 
@@ -64,11 +66,16 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
             position,
             createdAt: now,
             updatedAt: now,
-            checkedAt: data.checkedAt
+            checkedAt: data.checkedAt,
         };
     }
 
-    async update(id: string, data: Partial<Omit<ListItem, 'id' | 'listId' | 'createdAt' | 'updatedAt'>>): Promise<boolean> {
+    async update(
+        id: string,
+        data: Partial<
+            Omit<ListItem, 'id' | 'listId' | 'createdAt' | 'updatedAt'>
+        >
+    ): Promise<boolean> {
         const db = await this.getDb();
         const now = this.getCurrentTimestamp();
 
@@ -146,12 +153,7 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
             `UPDATE list_items 
        SET is_checked = ?, checked_at = ?, updated_at = ?
        WHERE id = ? AND deleted_at IS NULL`,
-            [
-                newCheckedState ? 1 : 0,
-                newCheckedState ? now : null,
-                now,
-                id
-            ]
+            [newCheckedState ? 1 : 0, newCheckedState ? now : null, now, id]
         );
 
         if (result.changes > 0) {
@@ -161,9 +163,12 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
         return result.changes > 0;
     }
 
-    async findByListId(listId: string, options?: {
-        sortBy?: 'position' | 'category' | 'name' | 'checked';
-    }): Promise<ListItem[]> {
+    async findByListId(
+        listId: string,
+        options?: {
+            sortBy?: 'position' | 'category' | 'name' | 'checked';
+        }
+    ): Promise<ListItem[]> {
         const db = await this.getDb();
 
         let orderBy = 'position ASC';
@@ -186,7 +191,7 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
             [listId]
         );
 
-        return results.map(row => ({
+        return results.map((row) => ({
             id: row.id,
             listId: row.list_id,
             name: row.name,
@@ -199,7 +204,7 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
             position: row.position,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-            checkedAt: row.checked_at
+            checkedAt: row.checked_at,
         }));
     }
 
@@ -219,7 +224,10 @@ export class ListItemRepository extends BaseRepository<DbListItem> {
     private async updateListCounts(listId: string): Promise<void> {
         const db = await this.getDb();
 
-        const counts = await db.getAllAsync<{ total: number; completed: number }>(
+        const counts = await db.getAllAsync<{
+            total: number;
+            completed: number;
+        }>(
             `SELECT 
         COUNT(*) as total,
         COUNT(CASE WHEN is_checked = 1 THEN 1 END) as completed

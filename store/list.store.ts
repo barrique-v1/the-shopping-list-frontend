@@ -1,7 +1,7 @@
 // src/stores/list.store.ts
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { List, ListItem } from '@/types';
+import type { List, ListItem } from '@/types/entities';
 import { listService, listItemService } from '@/services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,7 +18,10 @@ interface ListState {
     // List Actions
     fetchLists: () => Promise<void>;
     createList: (name: string, description?: string) => Promise<List>;
-    updateList: (id: string, updates: { name?: string; description?: string }) => Promise<void>;
+    updateList: (
+        id: string,
+        updates: { name?: string; description?: string }
+    ) => Promise<void>;
     deleteList: (id: string, permanent?: boolean) => Promise<void>;
     duplicateList: (id: string, newName?: string) => Promise<void>;
     selectList: (id: string) => Promise<void>;
@@ -26,13 +29,16 @@ interface ListState {
 
     // List Item Actions
     fetchListItems: (listId: string) => Promise<void>;
-    addItem: (listId: string, item: {
-        name: string;
-        quantity?: string;
-        unit?: string;
-        category?: string;
-        notes?: string;
-    }) => Promise<void>;
+    addItem: (
+        listId: string,
+        item: {
+            name: string;
+            quantity?: string;
+            unit?: string;
+            category?: string;
+            notes?: string;
+        }
+    ) => Promise<void>;
     updateItem: (id: string, updates: any) => Promise<void>;
     toggleItem: (id: string) => Promise<void>;
     deleteItem: (id: string, permanent?: boolean) => Promise<void>;
@@ -76,10 +82,13 @@ export const useListStore = create<ListState>()(
                 createList: async (name: string, description?: string) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const newList = await listService.createList(name, description);
-                        set(state => ({
+                        const newList = await listService.createList(
+                            name,
+                            description
+                        );
+                        set((state) => ({
                             lists: [newList, ...state.lists],
-                            isLoading: false
+                            isLoading: false,
                         }));
                         return newList;
                     } catch (error) {
@@ -88,20 +97,24 @@ export const useListStore = create<ListState>()(
                     }
                 },
 
-                updateList: async (id: string, updates: { name?: string; description?: string }) => {
+                updateList: async (
+                    id: string,
+                    updates: { name?: string; description?: string }
+                ) => {
                     set({ isLoading: true, error: null });
                     try {
                         await listService.updateList(id, updates);
 
                         // Update local state
-                        set(state => ({
-                            lists: state.lists.map(list =>
+                        set((state) => ({
+                            lists: state.lists.map((list) =>
                                 list.id === id ? { ...list, ...updates } : list
                             ),
-                            currentList: state.currentList?.id === id
-                                ? { ...state.currentList, ...updates }
-                                : state.currentList,
-                            isLoading: false
+                            currentList:
+                                state.currentList?.id === id
+                                    ? { ...state.currentList, ...updates }
+                                    : state.currentList,
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -114,11 +127,17 @@ export const useListStore = create<ListState>()(
                     try {
                         await listService.deleteList(id, permanent);
 
-                        set(state => ({
-                            lists: state.lists.filter(list => list.id !== id),
-                            currentList: state.currentList?.id === id ? null : state.currentList,
-                            currentListItems: state.currentList?.id === id ? [] : state.currentListItems,
-                            isLoading: false
+                        set((state) => ({
+                            lists: state.lists.filter((list) => list.id !== id),
+                            currentList:
+                                state.currentList?.id === id
+                                    ? null
+                                    : state.currentList,
+                            currentListItems:
+                                state.currentList?.id === id
+                                    ? []
+                                    : state.currentListItems,
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -129,10 +148,13 @@ export const useListStore = create<ListState>()(
                 duplicateList: async (id: string, newName?: string) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const newList = await listService.duplicateList(id, newName);
-                        set(state => ({
+                        const newList = await listService.duplicateList(
+                            id,
+                            newName
+                        );
+                        set((state) => ({
                             lists: [newList, ...state.lists],
-                            isLoading: false
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -145,11 +167,14 @@ export const useListStore = create<ListState>()(
                     try {
                         const list = await listService.getList(id);
                         if (list) {
-                            const items = await listItemService.getItemsByList(id, get().sortBy);
+                            const items = await listItemService.getItemsByList(
+                                id,
+                                get().sortBy
+                            );
                             set({
                                 currentList: list,
                                 currentListItems: items,
-                                isLoading: false
+                                isLoading: false,
                             });
                         }
                     } catch (error) {
@@ -165,7 +190,10 @@ export const useListStore = create<ListState>()(
                 fetchListItems: async (listId: string) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const items = await listItemService.getItemsByList(listId, get().sortBy);
+                        const items = await listItemService.getItemsByList(
+                            listId,
+                            get().sortBy
+                        );
                         set({ currentListItems: items, isLoading: false });
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -175,14 +203,24 @@ export const useListStore = create<ListState>()(
                 addItem: async (listId: string, item: any) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const newItem = await listItemService.addItem(listId, item);
+                        const newItem = await listItemService.addItem(
+                            listId,
+                            item
+                        );
 
-                        set(state => ({
-                            currentListItems: [...state.currentListItems, newItem],
+                        set((state) => ({
+                            currentListItems: [
+                                ...state.currentListItems,
+                                newItem,
+                            ],
                             currentList: state.currentList
-                                ? { ...state.currentList, totalItems: state.currentList.totalItems + 1 }
+                                ? {
+                                      ...state.currentList,
+                                      totalItems:
+                                          state.currentList.totalItems + 1,
+                                  }
                                 : null,
-                            isLoading: false
+                            isLoading: false,
                         }));
 
                         // Update list counts
@@ -198,11 +236,14 @@ export const useListStore = create<ListState>()(
                     try {
                         await listItemService.updateItem(id, updates);
 
-                        set(state => ({
-                            currentListItems: state.currentListItems.map(item =>
-                                item.id === id ? { ...item, ...updates } : item
+                        set((state) => ({
+                            currentListItems: state.currentListItems.map(
+                                (item) =>
+                                    item.id === id
+                                        ? { ...item, ...updates }
+                                        : item
                             ),
-                            isLoading: false
+                            isLoading: false,
                         }));
                     } catch (error) {
                         set({ error: String(error), isLoading: false });
@@ -214,23 +255,33 @@ export const useListStore = create<ListState>()(
                     try {
                         await listItemService.toggleItemChecked(id);
 
-                        set(state => ({
-                            currentListItems: state.currentListItems.map(item =>
-                                item.id === id ? { ...item, isChecked: !item.isChecked } : item
-                            )
+                        set((state) => ({
+                            currentListItems: state.currentListItems.map(
+                                (item) =>
+                                    item.id === id
+                                        ? {
+                                              ...item,
+                                              isChecked: !item.isChecked,
+                                          }
+                                        : item
+                            ),
                         }));
 
                         // Update list counts
                         const state = get();
                         if (state.currentList) {
-                            const checkedCount = state.currentListItems.filter(i =>
-                                i.id === id ? !i.isChecked : i.isChecked
+                            const checkedCount = state.currentListItems.filter(
+                                (i) =>
+                                    i.id === id ? !i.isChecked : i.isChecked
                             ).length;
 
-                            set(state => ({
+                            set((state) => ({
                                 currentList: state.currentList
-                                    ? { ...state.currentList, completedItems: checkedCount }
-                                    : null
+                                    ? {
+                                          ...state.currentList,
+                                          completedItems: checkedCount,
+                                      }
+                                    : null,
                             }));
                         }
 
@@ -245,12 +296,18 @@ export const useListStore = create<ListState>()(
                     try {
                         await listItemService.deleteItem(id, permanent);
 
-                        set(state => ({
-                            currentListItems: state.currentListItems.filter(item => item.id !== id),
+                        set((state) => ({
+                            currentListItems: state.currentListItems.filter(
+                                (item) => item.id !== id
+                            ),
                             currentList: state.currentList
-                                ? { ...state.currentList, totalItems: state.currentList.totalItems - 1 }
+                                ? {
+                                      ...state.currentList,
+                                      totalItems:
+                                          state.currentList.totalItems - 1,
+                                  }
                                 : null,
-                            isLoading: false
+                            isLoading: false,
                         }));
 
                         await get().fetchLists();
@@ -265,10 +322,15 @@ export const useListStore = create<ListState>()(
                         await listItemService.reorderItems(listId, itemIds);
 
                         // Reorder items in local state
-                        set(state => {
-                            const reorderedItems = itemIds.map(id =>
-                                state.currentListItems.find(item => item.id === id)!
-                            ).filter(Boolean);
+                        set((state) => {
+                            const reorderedItems = itemIds
+                                .map(
+                                    (id) =>
+                                        state.currentListItems.find(
+                                            (item) => item.id === id
+                                        )!
+                                )
+                                .filter(Boolean);
 
                             return { currentListItems: reorderedItems };
                         });
@@ -281,14 +343,25 @@ export const useListStore = create<ListState>()(
                 addMultipleItems: async (listId: string, text: string) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const items = await listItemService.parseAndAddItems(listId, text);
+                        const items = await listItemService.parseAndAddItems(
+                            listId,
+                            text
+                        );
 
-                        set(state => ({
-                            currentListItems: [...state.currentListItems, ...items],
+                        set((state) => ({
+                            currentListItems: [
+                                ...state.currentListItems,
+                                ...items,
+                            ],
                             currentList: state.currentList
-                                ? { ...state.currentList, totalItems: state.currentList.totalItems + items.length }
+                                ? {
+                                      ...state.currentList,
+                                      totalItems:
+                                          state.currentList.totalItems +
+                                          items.length,
+                                  }
                                 : null,
-                            isLoading: false
+                            isLoading: false,
                         }));
 
                         await get().fetchLists();
@@ -301,18 +374,23 @@ export const useListStore = create<ListState>()(
                 clearCheckedItems: async (listId: string) => {
                     set({ isLoading: true, error: null });
                     try {
-                        const deletedCount = await listService.clearCheckedItems(listId);
+                        const deletedCount =
+                            await listService.clearCheckedItems(listId);
 
-                        set(state => ({
-                            currentListItems: state.currentListItems.filter(item => !item.isChecked),
+                        set((state) => ({
+                            currentListItems: state.currentListItems.filter(
+                                (item) => !item.isChecked
+                            ),
                             currentList: state.currentList
                                 ? {
-                                    ...state.currentList,
-                                    totalItems: state.currentList.totalItems - deletedCount,
-                                    completedItems: 0
-                                }
+                                      ...state.currentList,
+                                      totalItems:
+                                          state.currentList.totalItems -
+                                          deletedCount,
+                                      completedItems: 0,
+                                  }
                                 : null,
-                            isLoading: false
+                            isLoading: false,
                         }));
 
                         await get().fetchLists();
@@ -326,16 +404,18 @@ export const useListStore = create<ListState>()(
                     try {
                         await listService.uncheckAllItems(listId);
 
-                        set(state => ({
-                            currentListItems: state.currentListItems.map(item => ({
-                                ...item,
-                                isChecked: false,
-                                checkedAt: undefined
-                            })),
+                        set((state) => ({
+                            currentListItems: state.currentListItems.map(
+                                (item) => ({
+                                    ...item,
+                                    isChecked: false,
+                                    checkedAt: undefined,
+                                })
+                            ),
                             currentList: state.currentList
                                 ? { ...state.currentList, completedItems: 0 }
                                 : null,
-                            isLoading: false
+                            isLoading: false,
                         }));
 
                         await get().fetchLists();
@@ -347,7 +427,9 @@ export const useListStore = create<ListState>()(
                 // UI State
                 setSearchQuery: (query: string) => set({ searchQuery: query }),
 
-                setSortBy: (sortBy: 'position' | 'category' | 'name' | 'checked') => {
+                setSortBy: (
+                    sortBy: 'position' | 'category' | 'name' | 'checked'
+                ) => {
                     set({ sortBy });
                     // Re-fetch items with new sort
                     const state = get();
@@ -356,7 +438,7 @@ export const useListStore = create<ListState>()(
                     }
                 },
 
-                clearError: () => set({ error: null })
+                clearError: () => set({ error: null }),
             }),
             {
                 name: 'list-storage',
@@ -370,15 +452,15 @@ export const useListStore = create<ListState>()(
                     },
                     removeItem: async (name) => {
                         await AsyncStorage.removeItem(name);
-                    }
+                    },
                 },
                 partialize: (state) => ({
-                    sortBy: state.sortBy
-                })
+                    sortBy: state.sortBy,
+                }),
             }
         ),
         {
-            name: 'list-store'
+            name: 'list-store',
         }
     )
 );
