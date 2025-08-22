@@ -1,17 +1,47 @@
 {
+  // Inherits base TypeScript configuration optimized for Expo projects
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    // Enables all strict type checking options - catches more potential errors
     "strict": true,
+
+    // Forces you to check if array/object access returns undefined (array[0] could be undefined)
+    // Prevents runtime errors when accessing potentially non-existent properties
+    "noUncheckedIndexedAccess": true,
+
+    // Prevents setting optional properties to explicit 'undefined' - must omit them instead
+    // Catches subtle bugs where you pass undefined instead of omitting the property
+    "exactOptionalPropertyTypes": true,
+
+    // Requires all code paths in functions to return a value
+    // Critical for React components and async functions to prevent missing returns
+    "noImplicitReturns": true,
+
+    // Prevents accidental fallthrough in switch statements
+    // Each case must have break/return or explicit fallthrough comment
+    "noFallthroughCasesInSwitch": true,
+
+    // Helps with tree-shaking and prevents importing modules with side effects
+    // Improves bundle size and prevents unexpected side effects during imports
+    "noUncheckedSideEffectImports": true,
+
+    // Ensures proper ES module handling and improves build performance
+    // Important for React Native bundling and Metro compatibility
+    "verbatimModuleSyntax": true,
+
+    // Allows importing files using '@/' prefix (e.g., '@/components/Header')
+    // Makes imports cleaner and easier to refactor
     "paths": {
       "@/*": [
         "./*"
       ]
     }
   },
+  // Files that TypeScript should process
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "**/*.ts",        // All TypeScript files
+    "**/*.tsx",       // All TypeScript React files
+    ".expo/types/**/*.ts",  // Expo-generated type definitions
+    "expo-env.d.ts"   // Expo environment type definitions
   ]
 }
