@@ -1,4 +1,4 @@
-// app/%28tabs%29/_layout.tsx
+// app/(tabs)/_layout.tsx
 
 import React, { useState } from 'react';
 import { BottomNavigation, useTheme } from 'react-native-paper';
@@ -43,40 +43,12 @@ export default function TabLayout() {
         return routes[index]?.title || 'App';
     };
 
-    const handleCreateList = () => {
-        console.log('Neue Liste erstellen');
-    };
-
-    const handleCreateRecipe = () => {
-        console.log('Neue Rezept erstellen');
-    };
-
-    const getHeaderButton = () => {
-        switch (routes[index]?.key) {
-            case 'lists':
-                return {
-                    label: 'Neue Liste',
-                    icon: 'plus',
-                    onPress: () => {
-                        handleCreateList();
-                    },
-                };
-            case 'recipes':
-                return {
-                    label: 'Neues Rezept',
-                    icon: 'book-plus',
-                    onPress: () => {
-                        handleCreateRecipe();
-                    },
-                };
-            default:
-                return undefined;
-        }
-    };
+    // Note: Header buttons are removed since we're using FAB in the lists page
+    // This provides a better UX with Material Design patterns
 
     return (
         <View style={{ flex: 1 }}>
-            <Header title={getCurrentTitle()} rightButton={getHeaderButton()} />
+            <Header title={getCurrentTitle()} />
 
             <BottomNavigation
                 navigationState={{ index, routes }}
