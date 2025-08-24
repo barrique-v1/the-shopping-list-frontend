@@ -1,7 +1,6 @@
 // src/services/list.service.ts
-import { List, ListItem } from '@/types';
+import type { List } from '@/types/entities';
 import { listRepository, listItemRepository } from '@/database/repositories';
-import { Unit, Category } from '@/types/constants';
 
 export class ListService {
     async createList(name: string, description?: string): Promise<List> {

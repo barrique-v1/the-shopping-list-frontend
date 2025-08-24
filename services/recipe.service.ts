@@ -1,7 +1,6 @@
 // src/services/recipe.service.ts
-import { Recipe, RecipeIngredient, ListItem } from '@/types';
+import type { Recipe, RecipeIngredient, ListItem } from '@/types/entities';
 import { recipeRepository, listItemRepository } from '@/database/repositories';
-import { Difficulty } from '@/types/constants';
 
 export class RecipeService {
     async createRecipe(
@@ -178,23 +177,27 @@ export class RecipeService {
 
         const multiplier = targetServings / recipe.servings;
 
-        const scaledIngredients = recipe.ingredients.map((ingredient) => {
-            let scaledQuantity = ingredient.quantity;
+        const scaledIngredients = recipe.ingredients.map(
+            (ingredient: { quantity: string }) => {
+                let scaledQuantity = ingredient.quantity;
 
-            if (ingredient.quantity) {
-                const numericQuantity = parseFloat(ingredient.quantity);
-                if (!isNaN(numericQuantity)) {
-                    scaledQuantity = (numericQuantity * multiplier).toFixed(2);
-                    // Remove trailing zeros
-                    scaledQuantity = parseFloat(scaledQuantity).toString();
+                if (ingredient.quantity) {
+                    const numericQuantity = parseFloat(ingredient.quantity);
+                    if (!isNaN(numericQuantity)) {
+                        scaledQuantity = (numericQuantity * multiplier).toFixed(
+                            2
+                        );
+                        // Remove trailing zeros
+                        scaledQuantity = parseFloat(scaledQuantity).toString();
+                    }
                 }
-            }
 
-            return {
-                ...ingredient,
-                quantity: scaledQuantity,
-            };
-        });
+                return {
+                    ...ingredient,
+                    quantity: scaledQuantity,
+                };
+            }
+        );
 
         return {
             recipe: {

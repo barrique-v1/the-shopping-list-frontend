@@ -1,5 +1,5 @@
 // src/services/import-export.service.ts
-import { List, Recipe } from '@/types';
+import type { List, Recipe } from '@/types/entities';
 import { listService, listItemService, recipeService } from './index';
 
 export interface ExportData {

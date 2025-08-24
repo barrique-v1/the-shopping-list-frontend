@@ -1,7 +1,7 @@
 // src/stores/recipe.store.ts
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { Recipe, ListItem } from '@/types';
+import type { Recipe, ListItem } from '@/types/entities';
 import { recipeService } from '@/services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

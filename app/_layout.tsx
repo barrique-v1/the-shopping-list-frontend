@@ -43,8 +43,8 @@ export default function RootLayout() {
     const theme = isDarkMode ? darkTheme : lightTheme;
 
     return (
-        <SafeAreaProvider>
-            <DatabaseProvider>
+        <DatabaseProvider>
+            <SafeAreaProvider>
                 <PaperProvider theme={theme}>
                     <StatusBar
                         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -52,7 +52,7 @@ export default function RootLayout() {
                     />
                     <TabLayout />
                 </PaperProvider>
-            </DatabaseProvider>
-        </SafeAreaProvider>
+            </SafeAreaProvider>
+        </DatabaseProvider>
     );
 }

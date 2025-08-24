@@ -1,5 +1,5 @@
 // src/services/listItem.service.ts
-import { ListItem } from '@/types';
+import type { ListItem } from '@/types/entities';
 import { listItemRepository } from '@/database/repositories';
 import { Unit, Category } from '@/types/constants';
 
