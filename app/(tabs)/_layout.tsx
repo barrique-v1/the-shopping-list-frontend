@@ -9,55 +9,52 @@ import Profile from '@/app/(tabs)/profile';
 import Header from '@/components/layout/Header';
 
 const routes = [
-    {
-        key: 'lists',
-        title: 'Meine Listen',
-        focusedIcon: 'list-box',
-        unfocusedIcon: 'list-box-outline',
-    },
-    {
-        key: 'recipes',
-        title: 'Meine Rezepte',
-        focusedIcon: 'book-open-variant',
-        unfocusedIcon: 'book-open-variant-outline',
-    },
-    {
-        key: 'profile',
-        title: 'Profil',
-        focusedIcon: 'account',
-        unfocusedIcon: 'account-outline',
-    },
+  {
+    key: 'lists',
+    title: 'Meine Listen',
+    focusedIcon: 'list-box',
+    unfocusedIcon: 'list-box-outline',
+  },
+  {
+    key: 'recipes',
+    title: 'Meine Rezepte',
+    focusedIcon: 'book-open-variant',
+    unfocusedIcon: 'book-open-variant-outline',
+  },
+  {
+    key: 'profile',
+    title: 'Profil',
+    focusedIcon: 'account',
+    unfocusedIcon: 'account-outline',
+  },
 ];
 
 const renderScene = BottomNavigation.SceneMap({
-    lists: ListsIndex,
-    recipes: RecipesIndex,
-    profile: Profile,
+  lists: ListsIndex,
+  recipes: RecipesIndex,
+  profile: Profile,
 });
 
 export default function TabLayout() {
-    const theme = useTheme();
-    const [index, setIndex] = useState(0);
+  const theme = useTheme();
+  const [index, setIndex] = useState(0);
 
-    const getCurrentTitle = () => {
-        return routes[index]?.title || 'App';
-    };
+  const getCurrentTitle = () => {
+    return routes[index]?.title || 'App';
+  };
 
-    // Note: Header buttons are removed since we're using FAB in the lists page
-    // This provides a better UX with Material Design patterns
+  return (
+    <View style={{ flex: 1 }}>
+      <Header title={getCurrentTitle()} />
 
-    return (
-        <View style={{ flex: 1 }}>
-            <Header title={getCurrentTitle()} />
-
-            <BottomNavigation
-                navigationState={{ index, routes }}
-                onIndexChange={setIndex}
-                renderScene={renderScene}
-                barStyle={{
-                    backgroundColor: theme.colors.surface,
-                }}
-            />
-        </View>
-    );
+      <BottomNavigation
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={renderScene}
+        barStyle={{
+          backgroundColor: theme.colors.surface,
+        }}
+      />
+    </View>
+  );
 }

@@ -32,16 +32,14 @@
     // Allows importing files using '@/' prefix (e.g., '@/components/Header')
     // Makes imports cleaner and easier to refactor
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   // Files that TypeScript should process
   "include": [
-    "**/*.ts",        // All TypeScript files
-    "**/*.tsx",       // All TypeScript React files
-    ".expo/types/**/*.ts",  // Expo-generated type definitions
-    "expo-env.d.ts"   // Expo environment type definitions
+    "**/*.ts", // All TypeScript files
+    "**/*.tsx", // All TypeScript React files
+    ".expo/types/**/*.ts", // Expo-generated type definitions
+    "expo-env.d.ts" // Expo environment type definitions
   ]
 }

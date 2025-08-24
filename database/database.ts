@@ -4,25 +4,25 @@ import * as SQLite from 'expo-sqlite';
 const DATABASE_NAME = 'shopping.db';
 
 class Database {
-    private db: SQLite.SQLiteDatabase | null = null;
+  private db: SQLite.SQLiteDatabase | null = null;
 
-    async init(): Promise<void> {
-        if (this.db) return;
+  async init(): Promise<void> {
+    if (this.db) return;
 
-        this.db = await SQLite.openDatabaseAsync(DATABASE_NAME);
+    this.db = await SQLite.openDatabaseAsync(DATABASE_NAME);
 
-        // Enable foreign keys
-        await this.db.execAsync('PRAGMA foreign_keys = ON;');
+    // Enable foreign keys
+    await this.db.execAsync('PRAGMA foreign_keys = ON;');
 
-        // Create tables
-        await this.createTables();
-    }
+    // Create tables
+    await this.createTables();
+  }
 
-    private async createTables(): Promise<void> {
-        if (!this.db) throw new Error('Database not initialized');
+  private async createTables(): Promise<void> {
+    if (!this.db) throw new Error('Database not initialized');
 
-        // Lists table
-        await this.db.execAsync(`
+    // Lists table
+    await this.db.execAsync(`
       CREATE TABLE IF NOT EXISTS lists (
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
@@ -32,8 +32,8 @@ class Database {
       );
     `);
 
-        // List items table
-        await this.db.execAsync(`
+    // List items table
+    await this.db.execAsync(`
       CREATE TABLE IF NOT EXISTS list_items (
         id TEXT PRIMARY KEY,
         list_id TEXT NOT NULL,
@@ -52,8 +52,8 @@ class Database {
       );
     `);
 
-        // Recipes table
-        await this.db.execAsync(`
+    // Recipes table
+    await this.db.execAsync(`
       CREATE TABLE IF NOT EXISTS recipes (
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
@@ -70,8 +70,8 @@ class Database {
       );
     `);
 
-        // Recipe ingredients table
-        await this.db.execAsync(`
+    // Recipe ingredients table
+    await this.db.execAsync(`
       CREATE TABLE IF NOT EXISTS recipe_ingredients (
         id TEXT PRIMARY KEY,
         recipe_id TEXT NOT NULL,
@@ -86,8 +86,8 @@ class Database {
       );
     `);
 
-        // Recipe tags table
-        await this.db.execAsync(`
+    // Recipe tags table
+    await this.db.execAsync(`
       CREATE TABLE IF NOT EXISTS recipe_tags (
         recipe_id TEXT NOT NULL,
         tag TEXT NOT NULL,
@@ -96,27 +96,27 @@ class Database {
       );
     `);
 
-        // Create indices for better performance
-        await this.db.execAsync(`
+    // Create indices for better performance
+    await this.db.execAsync(`
       CREATE INDEX IF NOT EXISTS idx_list_items_list_id ON list_items(list_id);
       CREATE INDEX IF NOT EXISTS idx_recipe_ingredients_recipe_id ON recipe_ingredients(recipe_id);
       CREATE INDEX IF NOT EXISTS idx_recipe_tags_recipe_id ON recipe_tags(recipe_id);
     `);
-    }
+  }
 
-    getDatabase(): SQLite.SQLiteDatabase {
-        if (!this.db) {
-            throw new Error('Database not initialized. Call init() first.');
-        }
-        return this.db;
+  getDatabase(): SQLite.SQLiteDatabase {
+    if (!this.db) {
+      throw new Error('Database not initialized. Call init() first.');
     }
+    return this.db;
+  }
 
-    async close(): Promise<void> {
-        if (this.db) {
-            await this.db.closeAsync();
-            this.db = null;
-        }
+  async close(): Promise<void> {
+    if (this.db) {
+      await this.db.closeAsync();
+      this.db = null;
     }
+  }
 }
 
 // Singleton instance

@@ -1,0 +1,12 @@
+node_modules/
+.expo/
+dist/
+build/
+ios/
+android/
+*.log
+.git/
+coverage/
+.nyc_output/
+.cache/
+

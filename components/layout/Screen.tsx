@@ -6,30 +6,30 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { AppTheme } from '@/theme';
 
 interface ScreenProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Screen({ children }: ScreenProps) {
-    const theme = useTheme<AppTheme>();
-    const insets = useSafeAreaInsets();
+  const theme = useTheme<AppTheme>();
+  const insets = useSafeAreaInsets();
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            paddingTop: 0,
-            paddingHorizontal: theme.spacing.md,
-            paddingBottom: insets.bottom,
-            backgroundColor: theme.colors.surface,
-        },
-        content: {
-            flex: 1,
-            paddingTop: theme.spacing.md,
-        },
-    });
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: 0,
+      paddingHorizontal: theme.spacing.md,
+      paddingBottom: insets.bottom,
+      backgroundColor: theme.colors.surface,
+    },
+    content: {
+      flex: 1,
+      paddingTop: theme.spacing.md,
+    },
+  });
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.content}>{children}</View>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <View style={styles.content}>{children}</View>
+    </View>
+  );
 }

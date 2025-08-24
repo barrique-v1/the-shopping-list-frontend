@@ -3,27 +3,27 @@ import { useEffect, useState } from 'react';
 import database from '@/database/database';
 
 export function useAppInitialization() {
-    const [isInitialized, setIsInitialized] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const initializeApp = async () => {
-            try {
-                // Initialize database
-                await database.init();
-                console.log('Database initialized successfully');
+  useEffect(() => {
+    const initializeApp = async () => {
+      try {
+        // Initialize database
+        await database.init();
+        console.log('Database initialized successfully');
 
-                setIsInitialized(true);
-            } catch (err) {
-                console.error('Failed to initialize app:', err);
-                setError(err instanceof Error ? err.message : 'Unknown error');
-            }
-        };
+        setIsInitialized(true);
+      } catch (err) {
+        console.error('Failed to initialize app:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      }
+    };
 
-        initializeApp();
-    }, []);
+    initializeApp();
+  }, []);
 
-    return { isInitialized, error };
+  return { isInitialized, error };
 }
 
 // Usage in app/_layout.tsx:
