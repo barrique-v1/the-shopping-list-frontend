@@ -1,3 +1,5 @@
+// app/%28tabs%29/recipes/index.tsx
+
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Surface, useTheme } from 'react-native-paper';

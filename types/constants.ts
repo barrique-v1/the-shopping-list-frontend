@@ -1,3 +1,5 @@
+// types/constants.ts
+
 export enum Unit {
     GRAM = 'g',
     KILOGRAM = 'kg',

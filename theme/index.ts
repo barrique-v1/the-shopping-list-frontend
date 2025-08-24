@@ -1,4 +1,5 @@
-import { MD3LightTheme, MD3DarkTheme, MD3Theme } from 'react-native-paper';
+// theme/index.ts
+import { MD3LightTheme, MD3DarkTheme, type MD3Theme } from 'react-native-paper';
 import { lightColors, darkColors } from './colors';
 import { fonts } from './fonts';
 import { spacing, roundness, shadows } from './tokens';

@@ -1,3 +1,4 @@
+// components/layout/Screen.tsx
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';

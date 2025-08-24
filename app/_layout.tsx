@@ -1,3 +1,5 @@
+// app/_layout.tsx
+
 import { useState, useEffect } from 'react';
 import { useColorScheme, StatusBar } from 'react-native';
 import { PaperProvider } from 'react-native-paper';

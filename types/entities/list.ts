@@ -1,3 +1,4 @@
+// types/entities/list.ts
 import { Category, type Unit } from '@/types/constants';
 
 export interface List {

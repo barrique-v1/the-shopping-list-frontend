@@ -1,3 +1,4 @@
+// types/entities/user.ts
 import type { Unit } from '@/types/constants';
 
 export interface User {

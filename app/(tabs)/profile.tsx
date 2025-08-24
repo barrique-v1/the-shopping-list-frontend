@@ -1,3 +1,4 @@
+// app/(tabs)/profile.tsx
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Surface, useTheme } from 'react-native-paper';

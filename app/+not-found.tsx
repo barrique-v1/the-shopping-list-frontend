@@ -1,3 +1,5 @@
+// app/%2Bnot-found.tsx
+
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-paper';

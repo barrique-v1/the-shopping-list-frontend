@@ -1,3 +1,5 @@
+// app/%28tabs%29/_layout.tsx
+
 import React, { useState } from 'react';
 import { BottomNavigation, useTheme } from 'react-native-paper';
 import { View } from 'react-native';

@@ -1,4 +1,5 @@
-import type {MD3Theme} from 'react-native-paper';
+// theme/colors.ts
+import type { MD3Theme } from 'react-native-paper';
 import materialTheme from './material-theme.json';
 
 type MD3Colors = MD3Theme['colors'];

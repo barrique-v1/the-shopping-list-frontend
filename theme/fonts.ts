@@ -1,4 +1,5 @@
-import type {MD3Theme} from 'react-native-paper';
+// theme/fonts.ts
+import type { MD3Theme } from 'react-native-paper';
 import { Platform } from 'react-native';
 
 type MD3Fonts = MD3Theme['fonts'];

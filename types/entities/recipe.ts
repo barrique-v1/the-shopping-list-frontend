@@ -1,3 +1,4 @@
+// types/entities/recipe.ts
 import { Category, Difficulty, type Unit } from '@/types/constants';
 
 export interface Recipe {
